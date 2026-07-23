@@ -85,7 +85,7 @@ export const projects: Project[] = [
       'Private subnets + NAT gateways with least-privilege IAM roles',
     ],
     repo: 'https://github.com/sumanthrk00/cloud-platform',
-    demo: 'https://demo.sumanthrk.dev',
+    demo: 'https://github.com/sumanthrk00/cloud-platform#live-demo',
     accent: 'from-brand-500 to-brand-700',
     metric: [
       { label: 'Daily requests', value: '2M+' },
@@ -105,6 +105,7 @@ export const projects: Project[] = [
       'React dashboard with cached aggregations',
     ],
     repo: 'https://github.com/sumanthrk00/analytics-pipeline',
+    demo: 'https://github.com/sumanthrk00/analytics-pipeline#demo',
     accent: 'from-accent-500 to-accent-700',
     metric: [
       { label: 'Throughput', value: '500K/min' },
@@ -124,6 +125,7 @@ export const projects: Project[] = [
       'Shared design system across iOS & Android',
     ],
     repo: 'https://github.com/sumanthrk00/mobile-app',
+    demo: 'https://github.com/sumanthrk00/mobile-app#preview',
     accent: 'from-brand-400 to-accent-500',
     metric: [
       { label: 'Stores', value: 'iOS + Android' },
@@ -143,6 +145,7 @@ export const projects: Project[] = [
       'Pull-request-based infra reviews on GitHub',
     ],
     repo: 'https://github.com/sumanthrk00/iac-toolkit',
+    demo: 'https://github.com/sumanthrk00/iac-toolkit#architecture',
     accent: 'from-ink-600 to-ink-800',
     metric: [
       { label: 'Environments', value: '3' },

@@ -72,12 +72,18 @@ export default {
           '0%': { transform: 'rotate(0deg)' },
           '100%': { transform: 'rotate(360deg)' },
         },
+        'counter-spin': {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(-360deg)' },
+        },
       },
       animation: {
         'fade-up': 'fade-up 0.7s ease-out forwards',
         float: 'float 6s ease-in-out infinite',
         shimmer: 'shimmer 2.5s linear infinite',
         'spin-slow': 'spin-slow 18s linear infinite',
+        'spin-orbit': 'spin-slow 38s linear infinite',
+        'counter-orbit': 'counter-spin 38s linear infinite',
       },
     },
   },

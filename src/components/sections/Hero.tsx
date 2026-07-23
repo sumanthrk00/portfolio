@@ -11,11 +11,10 @@ const container = {
 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24, filter: 'blur(4px)' },
+  hidden: { opacity: 0, y: 24 },
   show: {
     opacity: 1,
     y: 0,
-    filter: 'blur(0px)',
     transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const },
   },
 };
@@ -205,11 +204,7 @@ export function Hero() {
               </div>
 
               {/* Orbiting Rotating Technology Badges */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 38, repeat: Infinity, ease: 'linear' }}
-                className="absolute inset-0 z-10"
-              >
+              <div className="absolute inset-0 z-10 animate-spin-orbit will-change-transform">
                 {orbitTechs.map((tech, i) => {
                   const angle = (i / orbitTechs.length) * Math.PI * 2;
                   const radius = 45; // percentage radius from center
@@ -222,19 +217,16 @@ export function Hero() {
                       style={{ left: `${x}%`, top: `${y}%` }}
                     >
                       {/* Counter-rotate label so text remains upright while orbiting */}
-                      <motion.div
-                        animate={{ rotate: -360 }}
-                        transition={{ duration: 38, repeat: Infinity, ease: 'linear' }}
-                        whileHover={{ scale: 1.15 }}
-                        className="group relative cursor-default rounded-full border border-slate-200 bg-white/90 dark:border-slate-800 dark:bg-[#111827]/90 px-3.5 py-1.5 text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-xl backdrop-blur-md transition-all duration-300 hover:border-blue-500/60 dark:hover:text-white hover:shadow-blue-500/20"
+                      <div
+                        className="animate-counter-orbit will-change-transform group relative cursor-default rounded-full border border-slate-200 bg-white/90 dark:border-slate-800 dark:bg-[#111827]/90 px-3.5 py-1.5 text-xs font-semibold text-slate-800 dark:text-slate-200 shadow-xl backdrop-blur-md transition-all duration-300 hover:scale-110 hover:border-blue-500/60 dark:hover:text-white hover:shadow-blue-500/20"
                       >
                         <div className={`absolute -inset-0.5 rounded-full bg-gradient-to-r ${tech.color} opacity-0 blur-sm transition-opacity group-hover:opacity-70`} />
                         <span className="relative z-10">{tech.name}</span>
-                      </motion.div>
+                      </div>
                     </div>
                   );
                 })}
-              </motion.div>
+              </div>
 
               {/* Floating Sparkles Accent Icons */}
               <motion.div

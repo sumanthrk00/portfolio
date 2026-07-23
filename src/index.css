@@ -17,8 +17,8 @@
     text-rendering: optimizeLegibility;
   }
   body {
-    @apply bg-ink-50 text-ink-900 dark:bg-ink-950 dark:text-ink-100 font-sans antialiased;
-    transition: background-color 0.4s ease, color 0.4s ease;
+    @apply bg-slate-50 text-slate-900 dark:bg-ink-950 dark:text-ink-100 font-sans antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   ::selection {
     @apply bg-brand-500/30 text-ink-900 dark:text-white;
@@ -27,7 +27,7 @@
     @apply font-display tracking-tight;
   }
   *:focus-visible {
-    @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-ink-50 dark:ring-offset-ink-950 rounded-md;
+    @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-slate-50 dark:ring-offset-ink-950 rounded-md;
   }
 }
 
@@ -39,22 +39,22 @@
     @apply py-20 sm:py-24 lg:py-28;
   }
   .card {
-    @apply rounded-2xl border border-ink-200/70 bg-white/80 backdrop-blur-sm shadow-sm dark:border-white/10 dark:bg-white/[0.03];
+    @apply rounded-2xl border border-slate-200/90 bg-white/90 shadow-sm backdrop-blur-md transition-all duration-200 dark:border-white/10 dark:bg-white/[0.03];
   }
   .chip {
-    @apply inline-flex items-center gap-2 rounded-full border border-ink-200 bg-ink-50 px-3 py-1 text-xs font-medium text-ink-700 dark:border-white/10 dark:bg-white/5 dark:text-ink-200;
+    @apply inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-100/90 px-3 py-1 text-xs font-medium text-slate-800 dark:border-white/10 dark:bg-white/5 dark:text-ink-200;
   }
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-600/25 transition-all hover:bg-brand-500 hover:shadow-brand-500/40 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed;
   }
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink-300 bg-white/60 px-6 py-3 text-sm font-semibold text-ink-800 transition-all hover:bg-white hover:border-ink-400 active:scale-[0.98] dark:border-white/15 dark:bg-white/5 dark:text-ink-100 dark:hover:bg-white/10;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-slate-300 bg-white/80 px-6 py-3 text-sm font-semibold text-slate-800 transition-all hover:bg-white hover:border-slate-400 active:scale-[0.98] dark:border-white/15 dark:bg-white/5 dark:text-ink-100 dark:hover:bg-white/10;
   }
   .link-underline {
     @apply relative after:absolute after:bottom-0 after:left-0 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full;
   }
   .input {
-    @apply w-full rounded-xl border border-ink-200 bg-white/70 px-4 py-3 text-sm text-ink-900 placeholder-ink-400 transition-colors focus:border-brand-500 focus:bg-white dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder-ink-500 dark:focus:bg-white/[0.07];
+    @apply w-full rounded-xl border border-slate-300 bg-white/90 px-4 py-3 text-sm text-slate-900 placeholder-slate-400 transition-colors focus:border-brand-500 focus:bg-white focus:ring-2 focus:ring-brand-500/20 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder-ink-500 dark:focus:bg-white/[0.07];
   }
 }
 
