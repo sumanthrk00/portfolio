@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
 import { GitFork, Github, Loader2, Star, AlertCircle, ExternalLink } from 'lucide-react';
 import { profile } from '@/data/portfolio';
 import { SectionHeading } from '@/components/SectionHeading';
@@ -14,15 +13,6 @@ type Repo = {
   language: string;
   updated_at: string;
   topics?: string[];
-};
-
-const container = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.08 } },
-};
-const card = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const } },
 };
 
 function timeAgo(date: string): string {
@@ -56,7 +46,7 @@ export function GitHubSection() {
           cleanName = cleanName ? cleanName.replace(/\b\w/g, (c) => c.toUpperCase()) : repo.name;
           
           const defaultDesc = repo.name.toLowerCase().includes('portfolio')
-            ? 'Full-stack responsive developer portfolio application built with React, TypeScript, Tailwind CSS, and Framer Motion.'
+            ? 'Full-stack responsive developer portfolio application built with React, TypeScript, and Tailwind CSS.'
             : 'Open-source software project with clean architecture and modern developer tooling.';
             
           return {
@@ -135,22 +125,14 @@ export function GitHubSection() {
           )}
 
           {repos && !loading && !error && (
-            <motion.div
-              variants={container}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: '-60px' }}
-              className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
-            >
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {repos.map((repo) => (
-                <motion.a
+                <a
                   key={repo.id}
                   href={repo.html_url}
                   target="_blank"
                   rel="noreferrer"
-                  variants={card}
-                  whileHover={{ y: -4 }}
-                  className="card group flex flex-col p-5"
+                  className="card group flex flex-col p-5 transition-all duration-300 hover:-translate-y-1"
                 >
                   <div className="flex items-start justify-between">
                     <span className="grid h-10 w-10 place-items-center rounded-xl bg-ink-100 text-ink-700 transition-colors group-hover:bg-brand-500/10 group-hover:text-brand-600 dark:bg-white/5 dark:text-ink-200 dark:group-hover:bg-brand-500/15 dark:group-hover:text-brand-300">
@@ -183,12 +165,13 @@ export function GitHubSection() {
                     </div>
                     <ExternalLink size={14} className="text-ink-400 transition-colors group-hover:text-brand-500" />
                   </div>
-                </motion.a>
+                </a>
               ))}
-            </motion.div>
+            </div>
           )}
         </div>
       </div>
     </section>
   );
 }
+

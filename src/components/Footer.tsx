@@ -64,7 +64,7 @@ export function Footer() {
         <div className="mt-8 border-t border-ink-200/60 pt-6 text-center text-xs text-ink-400 dark:border-white/5 dark:text-ink-500">
           <p>
             © {new Date().getFullYear()} {profile.name}. Designed & built with React, TypeScript,
-            Tailwind CSS, and Framer Motion.
+            and Tailwind CSS.
           </p>
         </div>
       </div>

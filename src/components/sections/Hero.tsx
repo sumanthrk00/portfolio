@@ -1,23 +1,5 @@
-import { motion } from 'framer-motion';
 import { ArrowDown, Download, Github, Linkedin, Mail, Code2, Server, Cloud, Cpu, Send, Sparkles } from 'lucide-react';
 import { profile } from '@/data/portfolio';
-
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.05 },
-  },
-};
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const },
-  },
-};
 
 // Orbit Technologies
 const orbitTechs = [
@@ -46,7 +28,7 @@ const specializationCards = [
   },
   {
     title: 'Cloud & DevOps',
-    description: 'Deploying reliable applications using AWS, Docker, and Terraform.',
+    description: 'Deploying reliable applications using AWS, Docker, Kubernetes, and Terraform.',
     icon: Cloud,
     accent: 'border-cyan-500/30 bg-cyan-500/10 text-cyan-600 dark:text-cyan-400',
   },
@@ -75,20 +57,20 @@ export function Hero() {
           {/* ========================================================================= */}
           {/* LEFT SIDE: PROFILE HERO HEADER & ACTIONS                                 */}
           {/* ========================================================================= */}
-          <motion.div variants={container} initial="hidden" animate="show" className="lg:col-span-7">
+          <div className="lg:col-span-7">
             {/* Availability Badge */}
             {profile.available && (
-              <motion.div variants={fadeUp} className="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-400 backdrop-blur-md">
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-400 backdrop-blur-md">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
                 </span>
                 <span>Available for new opportunities</span>
-              </motion.div>
+              </div>
             )}
 
             {/* Main Headline */}
-            <motion.h1 variants={fadeUp} className="font-display text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl xl:text-7xl leading-[1.08]">
+            <h1 className="font-display text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl xl:text-7xl leading-[1.08]">
               Hi, I'm{' '}
               <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 dark:from-blue-400 dark:via-purple-400 dark:to-cyan-400 bg-clip-text text-transparent">
                 Sumanth R K
@@ -97,15 +79,15 @@ export function Hero() {
               <span className="text-slate-700 dark:text-slate-300 font-bold text-3xl sm:text-4xl lg:text-5xl">
                 Full Stack Software Engineer
               </span>
-            </motion.h1>
+            </h1>
 
             {/* Summary */}
-            <motion.p variants={fadeUp} className="mt-6 max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-300 sm:text-lg">
               {profile.summary}
-            </motion.p>
+            </p>
 
             {/* CTAs */}
-            <motion.div variants={fadeUp} className="mt-8 flex flex-wrap items-center gap-3.5">
+            <div className="mt-8 flex flex-wrap items-center gap-3.5">
               <a
                 href="#projects"
                 className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 px-6 py-3.5 text-sm font-semibold text-white shadow-xl shadow-blue-500/20 transition-all hover:scale-[1.02] hover:shadow-blue-500/35 active:scale-95"
@@ -130,10 +112,10 @@ export function Hero() {
                 <Send size={15} />
                 <span>Contact Me</span>
               </a>
-            </motion.div>
+            </div>
 
             {/* Social Links */}
-            <motion.div variants={fadeUp} className="mt-8 flex items-center gap-3">
+            <div className="mt-8 flex items-center gap-3">
               <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mr-1">Connect:</span>
               <a
                 href={profile.githubUrl}
@@ -166,19 +148,14 @@ export function Hero() {
               >
                 <Mail size={18} />
               </a>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
 
           {/* ========================================================================= */}
           {/* RIGHT SIDE: ROTATING TECHNOLOGY ORBIT WITH PROFILE PHOTO IN CENTER        */}
           {/* ========================================================================= */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
-            className="relative mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none"
-          >
+          <div className="relative mx-auto w-full max-w-md lg:col-span-5 lg:max-w-none">
             <div className="relative aspect-square w-full max-w-[440px] mx-auto grid place-items-center">
               
               {/* Orbit Concentric Rings */}
@@ -229,43 +206,27 @@ export function Hero() {
               </div>
 
               {/* Floating Sparkles Accent Icons */}
-              <motion.div
-                animate={{ y: [0, -10, 0], opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute right-4 top-8 text-blue-500 dark:text-blue-400"
-              >
+              <div className="absolute right-4 top-8 text-blue-500 dark:text-blue-400 animate-pulse">
                 <Sparkles size={20} />
-              </motion.div>
-              <motion.div
-                animate={{ y: [0, 12, 0], opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-                className="absolute left-6 bottom-12 text-cyan-500 dark:text-cyan-400"
-              >
+              </div>
+              <div className="absolute left-6 bottom-12 text-cyan-500 dark:text-cyan-400 animate-pulse">
                 <Sparkles size={16} />
-              </motion.div>
+              </div>
             </div>
-          </motion.div>
+          </div>
         </div>
 
 
         {/* ========================================================================= */}
         {/* FOUR PROFESSIONAL SPECIALIZATION CARDS                                    */}
         {/* ========================================================================= */}
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: '-60px' }}
-          className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
-        >
+        <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {specializationCards.map((card) => {
             const Icon = card.icon;
             return (
-              <motion.div
+              <div
                 key={card.title}
-                variants={fadeUp}
-                whileHover={{ y: -5 }}
-                className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 dark:border-slate-800 dark:bg-[#111827]/80 p-6 backdrop-blur-xl transition-all duration-300 hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-xl"
+                className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 dark:border-slate-800 dark:bg-[#111827]/80 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-xl"
               >
                 <div className="flex items-center gap-3">
                   <span className={`grid h-10 w-10 place-items-center rounded-xl border ${card.accent}`}>
@@ -278,12 +239,13 @@ export function Hero() {
                 <p className="mt-3 text-xs leading-relaxed text-slate-600 dark:text-slate-400 sm:text-sm">
                   {card.description}
                 </p>
-              </motion.div>
+              </div>
             );
           })}
-        </motion.div>
+        </div>
 
       </div>
     </section>
   );
 }
+

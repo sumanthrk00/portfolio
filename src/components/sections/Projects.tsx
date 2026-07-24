@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowUpRight, ExternalLink, Github, Star } from 'lucide-react';
+import { ArrowUpRight, Github, Star } from 'lucide-react';
 import { projects } from '@/data/portfolio';
 import { SectionHeading } from '@/components/SectionHeading';
 
@@ -30,11 +29,7 @@ export function Projects() {
               }`}
             >
               {active === i && (
-                <motion.span
-                  layoutId="project-tab"
-                  className="absolute inset-0 -z-10 rounded-full bg-brand-600 shadow-lg shadow-brand-600/30"
-                  transition={{ type: 'spring', stiffness: 380, damping: 32 }}
-                />
+                <span className="absolute inset-0 -z-10 rounded-full bg-brand-600 shadow-lg shadow-brand-600/30" />
               )}
               {p.title.split(' ')[0]}
             </button>
@@ -43,86 +38,67 @@ export function Projects() {
 
         {/* Showcase */}
         <div className="mt-10">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={active}
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="card overflow-hidden shadow-lg border-slate-200/90 dark:border-white/10"
-            >
-              <div className="grid lg:grid-cols-2">
-                {/* Visual panel */}
-                <div className={`relative min-h-[280px] overflow-hidden bg-gradient-to-br ${projects[active].accent} p-8`}>
-                  <div className="absolute inset-0 bg-grid opacity-20" />
-                  <div className="relative flex h-full flex-col justify-between">
-                    <div className="flex items-center gap-2 text-white/80">
-                      <span className="rounded-full bg-white/20 px-3 py-1 text-xs font-semibold backdrop-blur shadow-sm">
-                        {String(active + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
-                      </span>
+          <div className="card overflow-hidden shadow-lg border-slate-200/90 dark:border-white/10">
+            <div className="grid lg:grid-cols-2">
+              {/* Visual panel */}
+              <div className={`relative min-h-[280px] overflow-hidden bg-gradient-to-br ${projects[active].accent} p-8`}>
+                <div className="absolute inset-0 bg-grid opacity-20" />
+                <div className="relative flex h-full flex-col justify-between">
+                  <div className="flex items-center gap-2 text-white/80">
+                    <span className="rounded-full bg-white/20 px-3 py-1 text-xs font-semibold backdrop-blur shadow-sm">
+                      {String(active + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
+                    </span>
+                  </div>
+                  <div>
+                    <h3 className="font-display text-2xl font-bold text-white sm:text-3xl">
+                      {projects[active].title}
+                    </h3>
+                    <p className="mt-1 text-sm font-medium text-white/90">{projects[active].tagline}</p>
+                  </div>
+                  {projects[active].metric && (
+                    <div className="flex gap-6">
+                      {projects[active].metric.map((m) => (
+                        <div key={m.label}>
+                          <p className="font-display text-xl font-bold text-white">{m.value}</p>
+                          <p className="text-xs text-white/80">{m.label}</p>
+                        </div>
+                      ))}
                     </div>
-                    <div>
-                      <h3 className="font-display text-2xl font-bold text-white sm:text-3xl">
-                        {projects[active].title}
-                      </h3>
-                      <p className="mt-1 text-sm font-medium text-white/90">{projects[active].tagline}</p>
-                    </div>
-                    {projects[active].metric && (
-                      <div className="flex gap-6">
-                        {projects[active].metric.map((m) => (
-                          <div key={m.label}>
-                            <p className="font-display text-xl font-bold text-white">{m.value}</p>
-                            <p className="text-xs text-white/80">{m.label}</p>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Detail panel */}
-                <div className="flex flex-col p-6 sm:p-8">
-                  <p className="text-sm leading-relaxed text-slate-700 dark:text-ink-300">
-                    {projects[active].description}
-                  </p>
-                  <ul className="mt-5 space-y-2">
-                    {projects[active].highlights.map((h) => (
-                      <li key={h} className="flex gap-2 text-sm text-slate-800 dark:text-ink-200">
-                        <Star size={14} className="mt-0.5 shrink-0 text-accent-500 fill-accent-500/20" />
-                        {h}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {projects[active].tags.map((t) => (
-                      <span key={t} className="chip">{t}</span>
-                    ))}
-                  </div>
-                  <div className="mt-auto flex flex-wrap gap-3 pt-6 border-t border-slate-200/60 dark:border-white/10">
-                    <a
-                      href={projects[active].repo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-ghost !py-2.5 !text-xs"
-                    >
-                      <Github size={15} /> View code
-                    </a>
-                    {projects[active].demo && (
-                      <a
-                        href={projects[active].demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn-primary !py-2.5 !text-xs"
-                      >
-                        <ExternalLink size={15} /> Live demo
-                      </a>
-                    )}
-                  </div>
+                  )}
                 </div>
               </div>
-            </motion.div>
-          </AnimatePresence>
+
+              {/* Detail panel */}
+              <div className="flex flex-col p-6 sm:p-8">
+                <p className="text-sm leading-relaxed text-slate-700 dark:text-ink-300">
+                  {projects[active].description}
+                </p>
+                <ul className="mt-5 space-y-2">
+                  {projects[active].highlights.map((h) => (
+                    <li key={h} className="flex gap-2 text-sm text-slate-800 dark:text-ink-200">
+                      <Star size={14} className="mt-0.5 shrink-0 text-accent-500 fill-accent-500/20" />
+                      {h}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {projects[active].tags.map((t) => (
+                    <span key={t} className="chip">{t}</span>
+                  ))}
+                </div>
+                <div className="mt-auto flex flex-wrap gap-3 pt-6 border-t border-slate-200/60 dark:border-white/10">
+                  <a
+                    href={projects[active].repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-primary !py-2.5 !text-xs"
+                  >
+                    <Github size={15} /> View code
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Grid of all projects */}
@@ -151,3 +127,4 @@ export function Projects() {
     </section>
   );
 }
+

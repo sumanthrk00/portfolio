@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X, Github, Linkedin, Download } from 'lucide-react';
 import { navLinks, profile } from '@/data/portfolio';
 import { ThemeToggle } from './ThemeToggle';
@@ -39,12 +38,7 @@ export function Navbar({ theme, toggleTheme }: NavbarProps) {
   }, []);
 
   return (
-    <motion.header
-      initial={{ y: -24, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
-      className="fixed inset-x-0 top-0 z-50"
-    >
+    <header className="fixed inset-x-0 top-0 z-50">
       <div
         className={`transition-all duration-300 ${
           scrolled
@@ -74,11 +68,7 @@ export function Navbar({ theme, toggleTheme }: NavbarProps) {
                 }`}
               >
                 {active === link.href.replace('#', '') && (
-                  <motion.span
-                    layoutId="nav-pill"
-                    className="absolute inset-0 -z-10 rounded-full bg-brand-500/10"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
+                  <span className="absolute inset-0 -z-10 rounded-full bg-brand-500/10" />
                 )}
                 {link.label}
               </a>
@@ -124,38 +114,31 @@ export function Navbar({ theme, toggleTheme }: NavbarProps) {
         </nav>
       </div>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25 }}
-            className="overflow-hidden border-b border-ink-200/70 bg-ink-50/95 backdrop-blur-xl md:hidden dark:border-white/10 dark:bg-ink-950/95"
-          >
-            <div className="container-px flex flex-col gap-1 py-4">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="rounded-xl px-4 py-3 text-sm font-medium text-ink-700 transition-colors hover:bg-brand-500/10 dark:text-ink-200"
-                >
-                  {link.label}
-                </a>
-              ))}
+      {open && (
+        <div className="overflow-hidden border-b border-ink-200/70 bg-ink-50/95 backdrop-blur-xl md:hidden dark:border-white/10 dark:bg-ink-950/95">
+          <div className="container-px flex flex-col gap-1 py-4">
+            {navLinks.map((link) => (
               <a
-                href="/Sumanth_RK_CV.pdf"
-                download="Sumanth_RK_CV.pdf"
+                key={link.href}
+                href={link.href}
                 onClick={() => setOpen(false)}
-                className="btn-primary mt-2"
+                className="rounded-xl px-4 py-3 text-sm font-medium text-ink-700 transition-colors hover:bg-brand-500/10 dark:text-ink-200"
               >
-                <Download size={16} /> Download Resume
+                {link.label}
               </a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.header>
+            ))}
+            <a
+              href="/Sumanth_RK_CV.pdf"
+              download="Sumanth_RK_CV.pdf"
+              onClick={() => setOpen(false)}
+              className="btn-primary mt-2"
+            >
+              <Download size={16} /> Download Resume
+            </a>
+          </div>
+        </div>
+      )}
+    </header>
   );
 }
+

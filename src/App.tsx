@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { Hero } from '@/components/sections/Hero';
@@ -12,12 +11,18 @@ import { useTheme } from '@/hooks/useTheme';
 
 function App() {
   const { theme, toggle } = useTheme();
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        setScrollProgress((window.scrollY / totalHeight) * 100);
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
@@ -45,12 +50,13 @@ function App() {
       </main>
       <Footer />
       {/* Scroll progress bar */}
-      <motion.div
-        className="fixed bottom-0 left-0 right-0 z-50 h-0.5 origin-left bg-gradient-to-r from-brand-500 to-accent-500"
-        style={{ scaleX }}
+      <div
+        className="fixed bottom-0 left-0 z-50 h-0.5 bg-gradient-to-r from-brand-500 to-accent-500 transition-all duration-150"
+        style={{ width: `${scrollProgress}%` }}
       />
     </div>
   );
 }
 
 export default App;
+

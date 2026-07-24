@@ -1,5 +1,4 @@
 import { useState, type FormEvent } from 'react';
-import { motion } from 'framer-motion';
 import { CheckCircle2, Loader2, Mail, MapPin, Phone, Send, AlertCircle, Github, Linkedin } from 'lucide-react';
 import { profile } from '@/data/portfolio';
 import { SectionHeading } from '@/components/SectionHeading';
@@ -61,18 +60,12 @@ export function Contact() {
         <SectionHeading
           eyebrow="Contact"
           title="Let's build something together"
-          description="Have a role, a project, or an idea? Send a message and I'll get back to you within 48 hours."
+          description="Have a role, a project, or an idea? Send a message and let's connect."
         />
 
         <div className="mt-14 grid gap-8 lg:grid-cols-[1fr_1.2fr]">
           {/* Info column */}
-          <motion.div
-            initial={{ opacity: 0, x: -24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.6 }}
-            className="space-y-6"
-          >
+          <div className="space-y-6">
             <div className="card p-6 sm:p-8">
               <h3 className="font-display text-lg font-semibold">Get in touch</h3>
               <p className="mt-2 text-sm text-ink-500 dark:text-ink-400">
@@ -137,22 +130,10 @@ export function Contact() {
                 </a>
               </div>
             </div>
-
-            <div className="card p-6 sm:p-8">
-              <p className="text-sm font-semibold">Response time</p>
-              <p className="mt-1 text-sm text-ink-500 dark:text-ink-400">
-                Usually within 48 hours, often sooner.
-              </p>
-            </div>
-          </motion.div>
+          </div>
 
           {/* Form column */}
-          <motion.div
-            initial={{ opacity: 0, x: 24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.6 }}
-          >
+          <div>
             <form onSubmit={handleSubmit} className="card p-6 sm:p-8">
               <div className="grid gap-5 sm:grid-cols-2">
                 <Field label="Name" htmlFor="name">
@@ -226,26 +207,18 @@ export function Contact() {
               </button>
 
               {status === 'success' && (
-                <motion.p
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="mt-4 flex items-center gap-2 rounded-xl bg-accent-500/10 px-4 py-3 text-sm font-medium text-accent-700 dark:text-accent-300"
-                >
+                <p className="mt-4 flex items-center gap-2 rounded-xl bg-accent-500/10 px-4 py-3 text-sm font-medium text-accent-700 dark:text-accent-300">
                   <CheckCircle2 size={16} /> Thanks! Your message has been received — I'll be in touch shortly.
-                </motion.p>
+                </p>
               )}
 
               {status === 'error' && (
-                <motion.p
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="mt-4 flex items-center gap-2 rounded-xl bg-red-500/10 px-4 py-3 text-sm font-medium text-red-700 dark:text-red-300"
-                >
+                <p className="mt-4 flex items-center gap-2 rounded-xl bg-red-500/10 px-4 py-3 text-sm font-medium text-red-700 dark:text-red-300">
                   <AlertCircle size={16} /> {errorMsg}
-                </motion.p>
+                </p>
               )}
             </form>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
@@ -270,3 +243,4 @@ function Field({
     </div>
   );
 }
+

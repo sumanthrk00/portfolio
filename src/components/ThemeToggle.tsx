@@ -1,5 +1,4 @@
 import { Moon, Sun } from 'lucide-react';
-import { motion } from 'framer-motion';
 
 type ThemeToggleProps = {
   theme: 'light' | 'dark';
@@ -15,15 +14,10 @@ export function ThemeToggle({ theme, toggle }: ThemeToggleProps) {
       aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
       className="relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-ink-200 bg-white/70 text-ink-700 transition-colors hover:bg-white dark:border-white/10 dark:bg-white/5 dark:text-ink-200 dark:hover:bg-white/10"
     >
-      <motion.span
-        key={theme}
-        initial={{ rotate: -90, opacity: 0, scale: 0.5 }}
-        animate={{ rotate: 0, opacity: 1, scale: 1 }}
-        transition={{ duration: 0.3 }}
-        className="flex"
-      >
+      <span className="flex transition-transform duration-300">
         {isDark ? <Moon className="h-4.5 w-4.5" size={18} /> : <Sun className="h-4.5 w-4.5" size={18} />}
-      </motion.span>
+      </span>
     </button>
   );
 }
+

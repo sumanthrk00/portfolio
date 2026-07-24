@@ -28,7 +28,6 @@ export const skillCategories: SkillCategory[] = [
       { name: 'React', level: 92 },
       { name: 'React Native', level: 85 },
       { name: 'Tailwind CSS', level: 90 },
-      { name: 'Framer Motion', level: 80 },
     ],
   },
   {
@@ -54,6 +53,8 @@ export const skillCategories: SkillCategory[] = [
       { name: 'Git', level: 94 },
       { name: 'GitHub', level: 92 },
       { name: 'Docker', level: 80 },
+      { name: 'Kubernetes', level: 85 },
+      { name: 'VS Code', level: 90 },
     ],
   },
 ];
@@ -66,7 +67,6 @@ export type Project = {
   tags: string[];
   highlights: string[];
   repo: string;
-  demo?: string;
   accent: string;
   metric?: { label: string; value: string }[];
 };
@@ -85,7 +85,6 @@ export const projects: Project[] = [
       'Private subnets + NAT gateways with least-privilege IAM roles',
     ],
     repo: 'https://github.com/sumanthrk00/cloud-platform',
-    demo: 'https://github.com/sumanthrk00/cloud-platform#live-demo',
     accent: 'from-brand-500 to-brand-700',
     metric: [
       { label: 'Daily requests', value: '2M+' },
@@ -105,7 +104,6 @@ export const projects: Project[] = [
       'React dashboard with cached aggregations',
     ],
     repo: 'https://github.com/sumanthrk00/analytics-pipeline',
-    demo: 'https://github.com/sumanthrk00/analytics-pipeline#demo',
     accent: 'from-accent-500 to-accent-700',
     metric: [
       { label: 'Throughput', value: '500K/min' },
@@ -125,7 +123,6 @@ export const projects: Project[] = [
       'Shared design system across iOS & Android',
     ],
     repo: 'https://github.com/sumanthrk00/mobile-app',
-    demo: 'https://github.com/sumanthrk00/mobile-app#preview',
     accent: 'from-brand-400 to-accent-500',
     metric: [
       { label: 'Stores', value: 'iOS + Android' },
@@ -138,14 +135,13 @@ export const projects: Project[] = [
     tagline: 'Reproducible AWS environments',
     description:
       'A modular toolkit that spins up identical dev/staging/prod environments: VPC topology, multi-AZ RDS, S3 buckets with lifecycle policies, and ALB routing — all versioned in Git and reviewed via GitHub.',
-    tags: ['AWS', 'VPC', 'S3', 'EC2', 'Load Balancer', 'Git', 'GitHub'],
+    tags: ['AWS', 'Kubernetes', 'VPC', 'S3', 'EC2', 'Load Balancer', 'Git', 'GitHub'],
     highlights: [
       'One-command environment provisioning',
       'Drift detection and automated remediation',
       'Pull-request-based infra reviews on GitHub',
     ],
     repo: 'https://github.com/sumanthrk00/iac-toolkit',
-    demo: 'https://github.com/sumanthrk00/iac-toolkit#architecture',
     accent: 'from-ink-600 to-ink-800',
     metric: [
       { label: 'Environments', value: '3' },
@@ -177,7 +173,7 @@ export const profile = {
     },
     {
       title: 'Cloud & DevOps',
-      description: 'Deploying reliable applications using AWS, Docker, and Terraform.',
+      description: 'Deploying reliable applications using AWS, Docker, Kubernetes, and Terraform.',
     },
     {
       title: 'Software Architecture',
@@ -202,7 +198,7 @@ export const profile = {
       points: [
         'Built a Python streaming pipeline processing 500K events/min into S3.',
         'Designed the React dashboard for real-time analytics.',
-        'Cut p95 query latency by 60% through caching and indexing.',
+        'Cut p95 query latency by 60% through caching.',
       ],
     },
     {
