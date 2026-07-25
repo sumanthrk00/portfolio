@@ -114,41 +114,6 @@ export function Projects() {
             </div>
           </div>
         </div>
-
-        {/* Grid of all projects */}
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {projects.map((p, i) => (
-            <button
-              key={p.id}
-              type="button"
-              onClick={() => setActive(i)}
-              className={`card group p-5 text-left transition-all hover:-translate-y-1 ${
-                active === i
-                  ? 'ring-2 ring-brand-600 bg-brand-500/5 dark:bg-white/[0.06] shadow-md border-brand-500'
-                  : 'hover:border-slate-300 dark:hover:border-white/20'
-              }`}
-            >
-              <div className={`mb-4 h-1.5 w-12 rounded-full bg-gradient-to-r ${p.accent}`} />
-              <p className="font-display text-sm font-bold text-slate-900 dark:text-white">{p.title}</p>
-              <p className="mt-1 text-xs text-slate-600 dark:text-ink-400">{p.tagline}</p>
-              <div className="mt-3 flex items-center justify-between">
-                <span className="inline-flex items-center gap-1 text-xs font-semibold text-brand-600 dark:text-brand-300">
-                  View details <ArrowUpRight size={12} />
-                </span>
-                <a
-                  href={p.repo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                  className="rounded-md p-1 text-slate-500 hover:text-brand-600 dark:text-ink-400 dark:hover:text-brand-300 transition-colors"
-                  title="Open GitHub Repository"
-                >
-                  <Github size={14} />
-                </a>
-              </div>
-            </button>
-          ))}
-        </div>
       </div>
     </section>
   );
