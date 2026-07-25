@@ -43,18 +43,10 @@ export function Projects() {
               {/* Visual panel */}
               <div className={`relative min-h-[280px] overflow-hidden bg-gradient-to-br ${projects[active].accent} p-8 flex flex-col justify-between`}>
                 <div className="absolute inset-0 bg-grid opacity-20" />
-                <div className="relative flex items-center justify-between gap-2 text-white/80">
+                <div className="relative flex items-center gap-2 text-white/80">
                   <span className="rounded-full bg-white/20 px-3 py-1 text-xs font-semibold backdrop-blur shadow-sm">
                     {String(active + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
                   </span>
-                  <a
-                    href={projects[active].repo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-xs font-semibold text-white backdrop-blur transition-all hover:bg-white/30"
-                  >
-                    <Github size={14} /> Open Repo <ArrowUpRight size={13} />
-                  </a>
                 </div>
                 <div className="relative mt-6">
                   <h3 className="font-display text-2xl font-bold text-white sm:text-3xl">
