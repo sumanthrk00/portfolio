@@ -84,7 +84,7 @@ export const projects: Project[] = [
       'Per-tenant throttling and API keys via API Gateway usage plans',
       'Private subnets + NAT gateways with least-privilege IAM roles',
     ],
-    repo: 'https://github.com/sumanthrk00/cloud-platform',
+    repo: 'https://github.com/sumanthrk00/multi-tenant-platform',
     accent: 'from-brand-500 to-brand-700',
     metric: [
       { label: 'Daily requests', value: '2M+' },
@@ -93,7 +93,7 @@ export const projects: Project[] = [
   },
   {
     id: 'data-pipeline',
-    title: 'Real-Time Analytics Pipeline',
+    title: 'Real-Time Event Ingestion Pipeline',
     tagline: 'Streaming ingestion at scale',
     description:
       'Built a Python-based ingestion pipeline processing 500K events/min. Events land in S3 raw buckets, are transformed with batch jobs, and surfaced through a React dashboard with sub-second queries.',
@@ -103,7 +103,7 @@ export const projects: Project[] = [
       'Backpressure-aware workers with exponential retry',
       'React dashboard with cached aggregations',
     ],
-    repo: 'https://github.com/sumanthrk00/analytics-pipeline',
+    repo: 'https://github.com/sumanthrk00/event-ingestion-pipeline-123',
     accent: 'from-accent-500 to-accent-700',
     metric: [
       { label: 'Throughput', value: '500K/min' },
@@ -122,7 +122,7 @@ export const projects: Project[] = [
       'Biometric authentication and secure token storage',
       'Shared design system across iOS & Android',
     ],
-    repo: 'https://github.com/sumanthrk00/mobile-app',
+    repo: 'https://github.com/sumanthrk00/offline-sync-app',
     accent: 'from-brand-400 to-accent-500',
     metric: [
       { label: 'Stores', value: 'iOS + Android' },
@@ -212,6 +212,38 @@ export const profile = {
     },
   ],
 };
+
+export type Education = {
+  degree: string;
+  field?: string;
+  institution: string;
+  percentage?: string;
+  details?: string;
+};
+
+export const education: Education[] = [
+  {
+    degree: 'Bachelor of Engineering (B.E.)',
+    field: 'Computer Science & Engineering',
+    institution: 'Visvesvaraya Technological University (VTU)',
+    percentage: '7.4 CGPA',
+    details: 'Data Structures, Algorithms, OS, DBMS, & Software Architecture',
+  },
+  {
+    degree: 'Pre-University Course (PUC)',
+    field: 'Science (PCMB)',
+    institution: 'Mahesh PU College',
+    percentage: '60%',
+    details: 'Physics, Chemistry, Mathematics & Biology (PCMB)',
+  },
+  {
+    degree: 'Secondary School Leaving Certificate (SSLC)',
+    field: '10th Standard',
+    institution: 'Indian International School, Chitradurga',
+    percentage: '71%',
+    details: 'Secondary Education Curriculum',
+  },
+];
 
 export const navLinks = [
   { label: 'About', href: '#about' },

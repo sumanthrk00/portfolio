@@ -21,6 +21,7 @@ import {
   Activity,
   CheckCircle2,
 } from 'lucide-react';
+import { education } from '@/data/portfolio';
 
 // Section 3: Engineering Principles Data
 const engineeringPrinciples = [
@@ -282,30 +283,38 @@ export function About() {
                 <h3 className="font-display text-xl font-semibold text-slate-900 dark:text-white">Education</h3>
               </div>
 
-              {/* Timeline Style Education Item */}
-              <div className="relative mt-8 pl-6 border-l-2 border-slate-200 dark:border-slate-800">
-                <div className="absolute -left-[9px] top-1 h-4 w-4 rounded-full border-2 border-purple-500 bg-white dark:bg-[#111827]" />
-                
-                <h4 className="font-display text-lg font-semibold text-slate-900 dark:text-white">
-                  Bachelor of Engineering
-                </h4>
-                <p className="mt-1 text-sm font-medium text-purple-600 dark:text-purple-300">
-                  Computer Science & Engineering
-                </p>
-                <p className="mt-2 text-xs font-medium text-slate-500 dark:text-slate-400">
-                  Visvesvaraya Technological University (VTU)
-                </p>
-                
-                <div className="mt-4 flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
-                  <CheckCircle2 size={14} className="text-emerald-500 dark:text-emerald-400" />
-                  <span>Computer Science Core & Software Foundations</span>
-                </div>
+              {/* Timeline Style Education List */}
+              <div className="relative mt-8 space-y-6 pl-6 border-l-2 border-slate-200 dark:border-slate-800">
+                {education.map((edu) => (
+                  <div key={edu.degree} className="relative">
+                    <div className="absolute -left-[31px] top-1.5 h-4 w-4 rounded-full border-2 border-purple-500 bg-white dark:bg-[#111827]" />
+                    
+                    <div className="flex items-start justify-between gap-2">
+                      <h4 className="font-display text-base font-semibold text-slate-900 dark:text-white">
+                        {edu.degree}
+                      </h4>
+                      {edu.percentage && (
+                        <span className="shrink-0 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-xs font-bold text-emerald-600 dark:text-emerald-400">
+                          {edu.percentage}
+                        </span>
+                      )}
+                    </div>
+                    {edu.field && (
+                      <p className="mt-0.5 text-xs font-semibold text-purple-600 dark:text-purple-300">
+                        {edu.field}
+                      </p>
+                    )}
+                    <p className="mt-1 text-xs font-medium text-slate-600 dark:text-slate-400">
+                      {edu.institution}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
 
             <div className="mt-8 rounded-xl border border-slate-200 dark:border-slate-800/80 bg-slate-100/60 dark:bg-slate-900/60 p-4">
               <p className="text-xs text-slate-600 dark:text-slate-400">
-                Focused on Data Structures, Algorithms, Operating Systems, Database Management Systems, and Object-Oriented Software Architecture.
+                Academic journey from Indian International School, Chitradurga and Mahesh PU College to Computer Science Engineering.
               </p>
             </div>
           </div>
