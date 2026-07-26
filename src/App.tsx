@@ -7,6 +7,7 @@ import { Skills } from '@/components/sections/Skills';
 import { Projects } from '@/components/sections/Projects';
 import { GitHubSection } from '@/components/sections/GitHubSection';
 import { Contact } from '@/components/sections/Contact';
+import { HackerEnding } from '@/components/sections/HackerEnding';
 import { useTheme } from '@/hooks/useTheme';
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
         <Projects />
         <GitHubSection />
         <Contact />
+        <HackerEnding />
       </main>
       <Footer />
       {/* Scroll progress bar */}
