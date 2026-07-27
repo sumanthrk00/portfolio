@@ -1,3 +1,4 @@
+// This code was written for the Contact component
 import { useState, type FormEvent } from 'react';
 import { CheckCircle2, Loader2, Mail, MapPin, Phone, Send, AlertCircle, Github, Linkedin } from 'lucide-react';
 import { profile } from '@/data/portfolio';

@@ -1,3 +1,4 @@
+// This code was written for the Hero component
 import { ArrowDown, Download, Github, Linkedin, Mail, Code2, Server, Cloud, Cpu, Send, Sparkles } from 'lucide-react';
 import { profile } from '@/data/portfolio';
 

@@ -1,3 +1,4 @@
+// This code was written for the Skills component
 import { Cloud, Code2, Database, Layout } from 'lucide-react';
 import { skillCategories } from '@/data/portfolio';
 import { SectionHeading } from '@/components/SectionHeading';

@@ -1,3 +1,4 @@
+// This code was written for the Projects component
 import { useState } from 'react';
 import { ArrowUpRight, ExternalLink, Github, Star } from 'lucide-react';
 import { projects } from '@/data/portfolio';

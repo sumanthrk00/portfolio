@@ -1,3 +1,4 @@
+// This code was written for the GitHubSection component
 import { useEffect, useState } from 'react';
 import { GitFork, Github, Loader2, Star, AlertCircle, ExternalLink } from 'lucide-react';
 import { profile } from '@/data/portfolio';

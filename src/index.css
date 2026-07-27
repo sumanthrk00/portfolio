@@ -12,13 +12,14 @@
     color-scheme: dark;
   }
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: smooth !important;
+    scroll-padding-top: 5rem;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
   body {
     @apply bg-slate-50 text-slate-900 dark:bg-ink-950 dark:text-ink-100 font-sans antialiased;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
   ::selection {
     @apply bg-brand-500/30 text-ink-900 dark:text-white;
@@ -39,7 +40,7 @@
     @apply py-20 sm:py-24 lg:py-28;
   }
   .card {
-    @apply rounded-2xl border border-slate-200/90 bg-white/90 shadow-sm backdrop-blur-md transition-all duration-200 dark:border-white/10 dark:bg-white/[0.03];
+    @apply rounded-2xl border border-slate-200/90 bg-white/90 shadow-sm backdrop-blur-md transition-all duration-300 ease-out dark:border-white/10 dark:bg-white/[0.03];
   }
   .chip {
     @apply inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-100/90 px-3 py-1 text-xs font-medium text-slate-800 dark:border-white/10 dark:bg-white/5 dark:text-ink-200;

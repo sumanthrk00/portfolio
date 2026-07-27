@@ -1,3 +1,4 @@
+// This code was written for the About component
 import {
   Code2,
   Cpu,
@@ -87,13 +88,13 @@ const skillCategories = [
     category: 'Frontend',
     icon: Code2,
     badgeColor: 'border-blue-500/30 bg-blue-500/10 text-blue-700 dark:text-blue-300 hover:border-blue-400/60 hover:shadow-blue-500/20',
-    skills: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS', 'HTML5 & CSS3'],
+    skills: ['React', 'TypeScript', 'Tailwind CSS', 'HTML5 & CSS3'],
   },
   {
     category: 'Backend',
     icon: Server,
     badgeColor: 'border-purple-500/30 bg-purple-500/10 text-purple-700 dark:text-purple-300 hover:border-purple-400/60 hover:shadow-purple-500/20',
-    skills: ['Node.js', 'NestJS', 'REST APIs', 'Auth & Authorization'],
+    skills: ['NestJS', 'REST APIs', 'Auth & Authorization'],
   },
   {
     category: 'Database',
@@ -111,7 +112,7 @@ const skillCategories = [
     category: 'DevOps',
     icon: Container,
     badgeColor: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 hover:border-emerald-400/60 hover:shadow-emerald-500/20',
-    skills: ['Docker', 'Kubernetes', 'Terraform', 'Git & GitHub', 'CI/CD Pipelines'],
+    skills: ['Docker', 'Kubernetes', 'Terraform', 'Git & GitHub'],
   },
   {
     category: 'Tools',
@@ -126,7 +127,7 @@ const journeyTimeline = [
   {
     title: 'Scalable Frontend Architecture',
     description:
-      'Designed and engineered responsive, accessible React and Next.js interfaces with reusable design tokens, strict TypeScript contracts, and fluid UI animations.',
+      'Designed and engineered responsive, accessible React interfaces with reusable design tokens, strict TypeScript contracts, and fluid UI animations.',
     icon: Code2,
     tag: 'Frontend',
   },
@@ -193,7 +194,7 @@ export function About() {
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        
+
         {/* ========================================================================= */}
         {/* SECTION 1: HEADER & INTRO BADGE                                           */}
         {/* ========================================================================= */}
@@ -225,11 +226,11 @@ export function About() {
         {/* ========================================================================= */}
         <div className="mt-16 grid gap-8 lg:grid-cols-12">
           {/* LEFT CARD: Professional Summary & Chips */}
-          <div className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 dark:border-slate-800 dark:bg-[#111827]/80 p-6 sm:p-8 backdrop-blur-xl transition-all duration-300 hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-2xl hover:shadow-blue-500/5 lg:col-span-7">
+          <div className="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 dark:border-slate-800 dark:bg-[#111827]/80 p-6 sm:p-8 backdrop-blur-xl transition-all duration-500 ease-out hover:-translate-y-1.5 hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-2xl hover:shadow-blue-500/10 lg:col-span-7">
             <div className="absolute -right-20 -top-20 h-48 w-48 rounded-full bg-blue-500/10 blur-3xl transition-opacity group-hover:opacity-100" />
 
             <div className="flex items-center gap-4">
-              <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl border-2 border-blue-500/50 bg-slate-100 dark:bg-slate-900 shadow-lg shadow-blue-500/20">
+              <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl border-2 border-blue-500/50 bg-slate-100 dark:bg-slate-900 shadow-lg shadow-blue-500/20 transition-transform duration-500 group-hover:scale-105">
                 <img
                   src="/sumanth-profile.jpg"
                   alt="Sumanth R K"
@@ -253,26 +254,26 @@ export function About() {
 
             {/* Information Chips */}
             <div className="mt-8 flex flex-wrap gap-2.5">
-              <span className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900/90 px-3.5 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 transition-colors hover:border-blue-500/40 hover:text-slate-900 dark:hover:text-white">
+              <span className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900/90 px-3.5 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-500/40 hover:text-slate-900 dark:hover:text-white">
                 <MapPin size={14} className="text-blue-500 dark:text-blue-400" /> Bengaluru, India
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900/90 px-3.5 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 transition-colors hover:border-purple-500/40 hover:text-slate-900 dark:hover:text-white">
+              <span className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900/90 px-3.5 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 transition-all duration-300 hover:-translate-y-0.5 hover:border-purple-500/40 hover:text-slate-900 dark:hover:text-white">
                 <Briefcase size={14} className="text-purple-500 dark:text-purple-400" /> Full Stack Engineer
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900/90 px-3.5 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 transition-colors hover:border-cyan-500/40 hover:text-slate-900 dark:hover:text-white">
+              <span className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900/90 px-3.5 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 transition-all duration-300 hover:-translate-y-0.5 hover:border-cyan-500/40 hover:text-slate-900 dark:hover:text-white">
                 <Cloud size={14} className="text-cyan-500 dark:text-cyan-400" /> Cloud & DevOps
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900/90 px-3.5 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 transition-colors hover:border-emerald-500/40 hover:text-slate-900 dark:hover:text-white">
+              <span className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900/90 px-3.5 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-500/40 hover:text-slate-900 dark:hover:text-white">
                 <Rocket size={14} className="text-emerald-500 dark:text-emerald-400" /> Open to Opportunities
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900/90 px-3.5 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 transition-colors hover:border-pink-500/40 hover:text-slate-900 dark:hover:text-white">
+              <span className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900/90 px-3.5 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 transition-all duration-300 hover:-translate-y-0.5 hover:border-pink-500/40 hover:text-slate-900 dark:hover:text-white">
                 <Zap size={14} className="text-pink-500 dark:text-pink-400" /> Problem Solver
               </span>
             </div>
           </div>
 
           {/* RIGHT CARD: Education Timeline */}
-          <div className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 dark:border-slate-800 dark:bg-[#111827]/80 p-6 sm:p-8 backdrop-blur-xl transition-all duration-300 hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-2xl hover:shadow-purple-500/5 lg:col-span-5">
+          <div className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 dark:border-slate-800 dark:bg-[#111827]/80 p-6 sm:p-8 backdrop-blur-xl transition-all duration-500 ease-out hover:-translate-y-1.5 hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-2xl hover:shadow-purple-500/10 lg:col-span-5">
             <div className="absolute -right-16 -bottom-16 h-48 w-48 rounded-full bg-purple-500/10 blur-3xl transition-opacity group-hover:opacity-100" />
 
             <div>
@@ -288,7 +289,7 @@ export function About() {
                 {education.map((edu) => (
                   <div key={edu.degree} className="relative">
                     <div className="absolute -left-[31px] top-1.5 h-4 w-4 rounded-full border-2 border-purple-500 bg-white dark:bg-[#111827]" />
-                    
+
                     <div className="flex items-start justify-between gap-2">
                       <h4 className="font-display text-base font-semibold text-slate-900 dark:text-white">
                         {edu.degree}
@@ -343,7 +344,7 @@ export function About() {
                   className={`group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 dark:border-slate-800 dark:bg-[#111827]/80 p-6 backdrop-blur-xl transition-all duration-300 ${principle.borderColor} hover:-translate-y-1 hover:shadow-xl`}
                 >
                   <div className={`absolute -right-12 -top-12 h-32 w-32 rounded-full bg-gradient-to-br ${principle.color} blur-2xl transition-opacity group-hover:opacity-100`} />
-                  
+
                   <div className="relative z-10">
                     <span className={`inline-grid h-12 w-12 place-items-center rounded-xl border border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900 ${principle.iconColor} transition-transform group-hover:scale-110`}>
                       <Icon size={22} />
@@ -381,7 +382,7 @@ export function About() {
               return (
                 <div
                   key={item.category}
-                  className="rounded-2xl border border-slate-200/80 bg-white/80 dark:border-slate-800/80 dark:bg-[#111827]/60 p-5 sm:p-6 backdrop-blur-md transition-colors hover:border-slate-300 dark:hover:border-slate-700"
+                  className="rounded-2xl border border-slate-200/80 bg-white/80 dark:border-slate-800/80 dark:bg-[#111827]/60 p-5 sm:p-6 backdrop-blur-md transition-all duration-300 ease-out hover:-translate-y-1 hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-xl hover:shadow-blue-500/5"
                 >
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                     <div className="flex w-36 shrink-0 items-center gap-2.5">
@@ -431,9 +432,8 @@ export function About() {
                 return (
                   <div
                     key={item.title}
-                    className={`relative flex flex-col sm:flex-row items-start ${
-                      isEven ? 'sm:flex-row-reverse' : ''
-                    }`}
+                    className={`relative flex flex-col sm:flex-row items-start ${isEven ? 'sm:flex-row-reverse' : ''
+                      }`}
                   >
                     {/* Timeline Dot Icon */}
                     <div className="absolute left-4 sm:left-1/2 -translate-x-1/2 top-1.5 z-10 grid h-9 w-9 place-items-center rounded-full border-2 border-blue-500/60 bg-white dark:bg-[#0B0F19] text-blue-600 dark:text-blue-400 shadow-md shadow-blue-500/20">
