@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 // This code was written for the About component
 import {
   Code2,
@@ -183,6 +185,26 @@ const journeyTimeline = [
 ];
 
 export function About() {
+  // Track scroll progress through the Professional Journey timeline.
+  const journeyTimelineRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: journeyTimelineRef,
+    offset: ['start 70%', 'end 70%'],
+  });
+
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 25,
+    mass: 0.3,
+  });
+
+  const animatedLineHeight = useTransform(
+    smoothProgress,
+    [0, 1],
+    ['0%', '100%']
+  );
+
   return (
     <section id="about" className="relative overflow-hidden bg-slate-50 text-slate-900 dark:bg-[#0B0F19] dark:text-slate-100 py-24 sm:py-32 transition-colors duration-300">
       {/* Background Ambient Glow & Mesh Elements */}
@@ -421,9 +443,19 @@ export function About() {
             </p>
           </div>
 
-          <div className="relative mt-14 max-w-4xl mx-auto">
-            {/* Center Vertical Timeline Line */}
-            <div className="absolute left-4 sm:left-1/2 top-0 bottom-0 w-0.5 -translate-x-1/2 bg-gradient-to-b from-blue-500 via-purple-500 to-cyan-500 opacity-30" />
+          <div ref={journeyTimelineRef} className="relative mt-14 max-w-4xl mx-auto">
+            {/* Static background line */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute left-4 top-0 bottom-0 z-0 w-0.5 -translate-x-1/2 rounded-full bg-slate-300 dark:bg-slate-800 sm:left-1/2"
+            />
+
+            {/* Scroll-linked line: fills down as the user scrolls, retracts on scroll-up */}
+            <motion.div
+              aria-hidden="true"
+              style={{ height: animatedLineHeight }}
+              className="pointer-events-none absolute left-4 top-0 z-[1] w-[3px] -translate-x-1/2 rounded-full bg-gradient-to-b from-blue-500 via-purple-500 to-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.75)] sm:left-1/2"
+            />
 
             <div className="space-y-8">
               {journeyTimeline.map((item, index) => {
