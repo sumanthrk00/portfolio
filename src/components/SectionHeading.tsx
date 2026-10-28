@@ -1,37 +1,51 @@
 import type { ReactNode } from 'react';
 
 type SectionHeadingProps = {
+  number?: string;
   eyebrow: string;
   title: string;
   description?: string;
   align?: 'left' | 'center';
+  badge?: string;
   children?: ReactNode;
 };
 
 export function SectionHeading({
+  number,
   eyebrow,
   title,
   description,
-  align = 'center',
+  align = 'left',
+  badge,
   children,
 }: SectionHeadingProps) {
   const isCenter = align === 'center';
+
   return (
-    <div className={isCenter ? 'mx-auto max-w-2xl text-center' : 'max-w-2xl'}>
-      <span className="inline-flex items-center gap-2 rounded-full border border-brand-500/30 bg-brand-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-brand-600 dark:text-brand-300">
-        <span className="h-1.5 w-1.5 rounded-full bg-brand-500" />
-        {eyebrow}
-      </span>
-      <h2 className="mt-4 text-3xl font-bold sm:text-4xl lg:text-[2.75rem] leading-[1.1] text-balance">
+    <div className={`mb-12 sm:mb-16 ${isCenter ? 'mx-auto max-w-3xl text-center' : 'max-w-3xl'}`}>
+      {/* Label line inspired by reference editorial layout */}
+      <div className={`mb-4 flex items-center gap-3.5 ${isCenter ? 'justify-center' : ''}`}>
+        {number && <span className="mono-label text-cyan-400">{number}</span>}
+        {number && <span className="h-px w-8 bg-cyan-500/40" />}
+        <span className="mono-muted text-slate-400">{eyebrow}</span>
+        {badge && (
+          <span className="ml-auto hidden rounded border border-white/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-slate-400 sm:inline-block">
+            {badge}
+          </span>
+        )}
+      </div>
+
+      <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-[2.65rem] leading-[1.12]">
         {title}
       </h2>
+
       {description && (
-        <p className="mt-4 text-base sm:text-lg text-ink-500 dark:text-ink-300 leading-relaxed text-balance">
+        <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-400">
           {description}
         </p>
       )}
+
       {children}
     </div>
   );
 }
-

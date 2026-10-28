@@ -10,6 +10,14 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  server: {
+    host: true, // Exposes to local network (Wi-Fi / LAN)
+    port: 5173,
+  },
+  preview: {
+    host: true,
+    port: 4173,
+  },
   optimizeDeps: {
     exclude: ['lucide-react'],
   },

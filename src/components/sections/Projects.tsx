@@ -1,114 +1,73 @@
-// This code was written for the Projects component
 import { useState } from 'react';
-import { ArrowUpRight, ExternalLink, Github, Star } from 'lucide-react';
 import { projects } from '@/data/portfolio';
+import { ProjectCard } from '@/components/ProjectCard';
 import { SectionHeading } from '@/components/SectionHeading';
 
 export function Projects() {
-  const [active, setActive] = useState(0);
+  const [filter, setFilter] = useState<string>('All');
+
+  const categories = ['All', 'Cloud & Infrastructure', 'Backend & Data', 'Mobile & Cloud', 'DevOps & IaC'];
+
+  const featuredProject = projects.find((p) => p.featured) || projects[0];
+  const otherProjects = projects.filter((p) => p.id !== featuredProject.id);
+
+  const filteredProjects =
+    filter === 'All'
+      ? otherProjects
+      : otherProjects.filter((p) => p.category.toLowerCase().includes(filter.toLowerCase()));
 
   return (
-    <section id="projects" className="section-pad">
+    <section id="projects" className="section-pad relative border-t border-white/[0.06]">
+      {/* Background ambient lighting */}
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute left-1/4 top-1/4 h-80 w-80 rounded-full bg-cyan-500/[0.04] blur-[150px]" />
+      </div>
+
       <div className="container-px">
+        {/* Section Heading */}
         <SectionHeading
-          eyebrow="Projects"
-          title="Selected work"
-          description="A few systems I've designed and shipped end to end — from cloud architecture to streaming data pipelines."
+          number="06"
+          eyebrow="SELECTED PROJECTS"
+          title="Projects built to solve meaningful problems."
+          description="A curated portfolio of software builds taken from architectural concept to production deployment."
         />
 
-        {/* Tabs */}
-        <div className="mt-12 flex flex-wrap justify-center gap-2">
-          {projects.map((p, i) => (
-            <button
-              key={p.id}
-              type="button"
-              onClick={() => setActive(i)}
-              className={`relative rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
-                active === i
-                  ? 'text-white'
-                  : 'text-slate-700 hover:text-slate-900 dark:text-ink-300 dark:hover:text-white'
-              }`}
-            >
-              {active === i && (
-                <span className="absolute inset-0 -z-10 rounded-full bg-brand-600 shadow-lg shadow-brand-600/30" />
-              )}
-              {p.title.startsWith('Real-Time') ? 'Real-Time' : p.title.split(' ')[0]}
-            </button>
-          ))}
+        {/* Flagship Featured Build */}
+        <div className="mt-12 sm:mt-16">
+          <ProjectCard project={featuredProject} featured={true} />
         </div>
 
-        {/* Showcase */}
-        <div className="mt-10">
-          <div className="card overflow-hidden shadow-lg border-slate-200/90 dark:border-white/10">
-            <div className="grid lg:grid-cols-2">
-              {/* Visual panel */}
-              <div className={`relative min-h-[280px] overflow-hidden bg-gradient-to-br ${projects[active].accent} p-8 flex flex-col justify-between`}>
-                <div className="absolute inset-0 bg-grid opacity-20" />
-                <div className="relative flex items-center gap-2 text-white/80">
-                  <span className="rounded-full bg-white/20 px-3 py-1 text-xs font-semibold backdrop-blur shadow-sm">
-                    {String(active + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
-                  </span>
-                </div>
-                <div className="relative mt-6">
-                  <h3 className="font-display text-2xl font-bold text-white sm:text-3xl">
-                    <a
-                      href={projects[active].repo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:underline inline-flex items-center gap-2"
-                    >
-                      {projects[active].title}
-                      <ExternalLink size={20} className="inline-block opacity-80" />
-                    </a>
-                  </h3>
-                  <p className="mt-1 text-sm font-medium text-white/90">{projects[active].tagline}</p>
-                </div>
-                {projects[active].metric && (
-                  <div className="relative mt-6 flex gap-6">
-                    {projects[active].metric.map((m) => (
-                      <div key={m.label}>
-                        <p className="font-display text-xl font-bold text-white">{m.value}</p>
-                        <p className="text-xs text-white/80">{m.label}</p>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Detail panel */}
-              <div className="flex flex-col p-6 sm:p-8">
-                <p className="text-sm leading-relaxed text-slate-700 dark:text-ink-300">
-                  {projects[active].description}
-                </p>
-                <ul className="mt-5 space-y-2">
-                  {projects[active].highlights.map((h) => (
-                    <li key={h} className="flex gap-2 text-sm text-slate-800 dark:text-ink-200">
-                      <Star size={14} className="mt-0.5 shrink-0 text-accent-500 fill-accent-500/20" />
-                      {h}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {projects[active].tags.map((t) => (
-                    <span key={t} className="chip">{t}</span>
-                  ))}
-                </div>
-                <div className="mt-auto flex flex-wrap gap-3 pt-6 border-t border-slate-200/60 dark:border-white/10">
-                  <a
-                    href={projects[active].repo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-primary !py-2.5 !text-xs inline-flex items-center gap-2"
-                  >
-                    <Github size={15} /> View on GitHub <ExternalLink size={13} />
-                  </a>
-                </div>
-              </div>
-            </div>
+        {/* Category Filters */}
+        <div className="mt-16 sm:mt-20 flex flex-wrap items-center justify-between gap-4 border-b border-white/[0.08] pb-4">
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setFilter(cat)}
+                className={`rounded-lg px-3 py-1.5 font-mono text-xs uppercase tracking-wider transition-colors ${
+                  filter === cat
+                    ? 'border border-cyan-500/40 bg-cyan-500/10 text-cyan-300 font-semibold'
+                    : 'text-slate-400 hover:text-white hover:bg-white/[0.04]'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
+
+          <span className="font-mono text-xs text-slate-500">
+            Showing {filteredProjects.length + 1} engineering builds
+          </span>
+        </div>
+
+        {/* Grid of Other Projects */}
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
+          {filteredProjects.map((project) => (
+            <ProjectCard key={project.id} project={project} featured={false} />
+          ))}
         </div>
       </div>
     </section>
   );
 }
-

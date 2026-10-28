@@ -1,62 +1,41 @@
-import { useEffect, useState } from 'react';
 import { Navbar } from '@/components/Navbar';
-import { Footer } from '@/components/Footer';
 import { Hero } from '@/components/sections/Hero';
+import { Capabilities } from '@/components/sections/Capabilities';
 import { About } from '@/components/sections/About';
-import { Skills } from '@/components/sections/Skills';
-import { Projects } from '@/components/sections/Projects';
-import { GitHubSection } from '@/components/sections/GitHubSection';
+import { Principles } from '@/components/sections/Principles';
+import { Expertise } from '@/components/sections/Expertise';
+import { Journey } from '@/components/sections/Journey';
+import { SkillsMatrix } from '@/components/sections/SkillsMatrix';
+import { SelectedWork } from '@/components/sections/SelectedWork';
+import { OpenSource } from '@/components/sections/OpenSource';
 import { Contact } from '@/components/sections/Contact';
-import { useTheme } from '@/hooks/useTheme';
+import { Footer } from '@/components/Footer';
 
-function App() {
-  const { theme, toggle } = useTheme();
-  const [scrollProgress, setScrollProgress] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalHeight > 0) {
-        setScrollProgress((window.scrollY / totalHeight) * 100);
-      }
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    if ('scrollRestoration' in window.history) {
-      window.history.scrollRestoration = 'manual';
-    }
-    window.scrollTo(0, 0);
-
-    const handleBeforeUnload = () => {
-      window.scrollTo(0, 0);
-    };
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-  }, []);
-
+export function App() {
   return (
-    <div className="relative min-h-screen overflow-x-hidden">
-      <Navbar theme={theme} toggleTheme={toggle} />
-      <main>
-        <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <GitHubSection />
-        <Contact />
-      </main>
-      <Footer />
-      {/* Scroll progress bar */}
-      <div
-        className="fixed bottom-0 left-0 z-50 h-0.5 bg-gradient-to-r from-brand-500 to-accent-500 transition-all duration-150"
-        style={{ width: `${scrollProgress}%` }}
-      />
+    <div className="paper-page relative min-h-screen overflow-hidden">
+      {/* Background paper grain effect */}
+      <div className="grain" aria-hidden="true" />
+
+      {/* Main page content container */}
+      <div className="relative z-[1]">
+        <Navbar />
+        <main>
+          <Hero />
+          <Capabilities />
+          <About />
+          <Principles />
+          <Expertise />
+          <Journey />
+          <SkillsMatrix />
+          <SelectedWork />
+          <OpenSource />
+          <Contact />
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 }
 
 export default App;
-

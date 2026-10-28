@@ -1,69 +1,89 @@
-// This code was written for the Skills component
-import { Cloud, Code2, Database, Layout } from 'lucide-react';
+import { Layout, Server, Database, Cloud, Wrench, Code2 } from 'lucide-react';
 import { skillCategories } from '@/data/portfolio';
 import { SectionHeading } from '@/components/SectionHeading';
 
-const iconMap: Record<string, typeof Code2> = {
-  Code2,
+const iconMap: Record<string, typeof Layout> = {
   Layout,
-  Cloud,
+  Server,
   Database,
+  Cloud,
+  Wrench,
 };
 
 export function Skills() {
   return (
-    <section id="skills" className="section-pad relative">
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/4 top-1/2 h-72 w-72 -translate-y-1/2 rounded-full bg-brand-500/10 blur-[120px]" />
+    <section id="skills" className="section-pad relative border-t border-white/[0.06]">
+      {/* Background ambient lighting */}
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute right-1/4 top-1/3 h-80 w-80 rounded-full bg-blue-600/[0.04] blur-[150px]" />
       </div>
+
       <div className="container-px">
+        {/* Section Heading */}
         <SectionHeading
-          eyebrow="Skills"
-          title="A full-stack, cloud-native toolkit"
-          description="From backend services to mobile apps to AWS infrastructure — I work across the stack to ship complete systems."
+          number="03"
+          eyebrow="TECHNICAL EXPERTISE"
+          title="Core technologies, frameworks, and infrastructure tools."
+          description="A curated toolkit organized by discipline. Maintained centrally without arbitrary proficiency percentages."
         />
 
-        <div className="mt-14 grid gap-6 sm:grid-cols-2">
-          {skillCategories.map((cat) => {
-            const Icon = iconMap[cat.icon] ?? Code2;
+        {/* Grouped Skills Matrix */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {skillCategories.map((category) => {
+            const Icon = iconMap[category.iconName] || Code2;
             return (
               <div
-                key={cat.id}
-                className="card group relative overflow-hidden p-6 sm:p-7 transition-all duration-300 hover:-translate-y-1"
+                key={category.id}
+                className="group flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-[#0c101a] p-6 sm:p-7 transition-all duration-300 hover:border-cyan-500/40 hover:bg-[#101524] hover:shadow-xl hover:shadow-cyan-500/5"
               >
-                <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-brand-500/5 transition-transform duration-500 group-hover:scale-150" />
-                <div className="relative flex items-start gap-4">
-                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-brand-500/15 to-accent-500/15 text-brand-600 ring-1 ring-brand-500/20 dark:text-brand-300">
-                    <Icon size={22} />
-                  </span>
-                  <div>
-                    <h3 className="font-display text-lg font-semibold">{cat.title}</h3>
-                    <p className="mt-1 text-sm text-ink-500 dark:text-ink-400">{cat.blurb}</p>
+                <div>
+                  {/* Category Header */}
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs font-semibold text-cyan-400">
+                      {category.number}
+                    </span>
+                    <span className="grid h-10 w-10 place-items-center rounded-xl border border-white/[0.08] bg-white/[0.03] text-slate-300 transition-colors group-hover:border-cyan-500/40 group-hover:bg-cyan-500/10 group-hover:text-cyan-400">
+                      <Icon size={18} />
+                    </span>
                   </div>
+
+                  <h3 className="mt-4 font-display text-xl font-bold text-white group-hover:text-cyan-300 transition-colors">
+                    {category.title}
+                  </h3>
+                  <p className="mt-2 text-xs leading-relaxed text-slate-400">
+                    {category.description}
+                  </p>
                 </div>
 
-                <div className="relative mt-6 space-y-3.5">
-                  {cat.skills.map((s) => (
-                    <div key={s.name}>
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="font-medium">{s.name}</span>
-                        <span className="font-mono text-xs text-ink-400 dark:text-ink-500">{s.level}%</span>
-                      </div>
-                      <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-ink-200/70 dark:bg-white/10">
-                        <div
-                          className="h-full rounded-full bg-gradient-to-r from-brand-500 to-accent-500 transition-all duration-1000"
-                          style={{ width: `${s.level}%` }}
-                        />
-                      </div>
-                    </div>
-                  ))}
+                {/* Skills Chips */}
+                <div className="mt-6 pt-5 border-t border-white/[0.08]">
+                  <div className="flex flex-wrap gap-2">
+                    {category.skills.map((skill) => (
+                      <span
+                        key={skill.name}
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-1.5 font-mono text-xs text-slate-200 transition-all hover:border-cyan-500/40 hover:bg-cyan-500/10 hover:text-cyan-300"
+                      >
+                        <span>{skill.name}</span>
+                        {skill.tag && (
+                          <span className="text-[10px] text-slate-500">
+                            • {skill.tag}
+                          </span>
+                        )}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             );
           })}
         </div>
+
+        {/* Small Note */}
+        <div className="mt-10 flex items-center justify-between rounded-xl border border-white/[0.06] bg-[#090d16] px-5 py-3 font-mono text-xs text-slate-400">
+          <span>* Centralized in src/data/portfolio.ts</span>
+          <span className="text-cyan-400">Type-Safe • Verified Skills</span>
+        </div>
       </div>
     </section>
   );
 }
-

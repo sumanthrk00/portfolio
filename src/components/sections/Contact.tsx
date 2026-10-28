@@ -1,221 +1,223 @@
-// This code was written for the Contact component
-import { useState, type FormEvent } from 'react';
-import { CheckCircle2, Loader2, Mail, MapPin, Phone, Send, AlertCircle, Github, Linkedin } from 'lucide-react';
-import { profile } from '@/data/portfolio';
-import { SectionHeading } from '@/components/SectionHeading';
+import { useState, useEffect, type FormEvent } from 'react';
+import { Mail, Phone, MapPin, Github, Linkedin, Send, CheckCircle2 } from 'lucide-react';
 import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 
-type Status = 'idle' | 'loading' | 'success' | 'error';
-
-type FormState = {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-};
-
-const initial: FormState = { name: '', email: '', subject: '', message: '' };
-
 export function Contact() {
-  const [form, setForm] = useState<FormState>(initial);
-  const [status, setStatus] = useState<Status>('idle');
-  const [errorMsg, setErrorMsg] = useState<string>('');
+  const [istTime, setIstTime] = useState<string>('--:--:--');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [subject, setSubject] = useState('');
+  const [message, setMessage] = useState('');
+  const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  function update<K extends keyof FormState>(key: K, value: string) {
-    setForm((f) => ({ ...f, [key]: value }));
-  }
+  useEffect(() => {
+    function updateClock() {
+      try {
+        const timeStr = new Date().toLocaleTimeString('en-US', {
+          timeZone: 'Asia/Kolkata',
+          hour12: false,
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+        });
+        setIstTime(timeStr);
+      } catch {
+        setIstTime('15:30:00');
+      }
+    }
+    updateClock();
+    const timer = setInterval(updateClock, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    setStatus('loading');
-    setErrorMsg('');
+    setLoading(true);
+
     try {
-      if (!isSupabaseConfigured) {
-        // Fallback simulation when Supabase environment variables are not configured
-        await new Promise((resolve) => setTimeout(resolve, 600));
-        setStatus('success');
-        setForm(initial);
-        return;
+      if (isSupabaseConfigured) {
+        const { error } = await supabase.from('contact_messages').insert({
+          name: name.trim(),
+          email: email.trim(),
+          subject: subject.trim(),
+          message: message.trim(),
+        });
+        if (error) throw error;
+      } else {
+        const mailtoUrl = `mailto:sumanthrk512@gmail.com?subject=${encodeURIComponent(
+          subject.trim() || 'Software Engineering Inquiry'
+        )}&body=${encodeURIComponent(`From: ${name} (${email})\n\n${message}`)}`;
+        window.location.href = mailtoUrl;
       }
-      const { error } = await supabase.from('contact_messages').insert({
-        name: form.name,
-        email: form.email,
-        subject: form.subject,
-        message: form.message,
-      });
-      if (error) throw error;
-      setStatus('success');
-      setForm(initial);
-    } catch (err) {
-      setStatus('error');
-      setErrorMsg(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+      setSent(true);
+      setName('');
+      setEmail('');
+      setSubject('');
+      setMessage('');
+    } catch {
+      const mailtoUrl = `mailto:sumanthrk512@gmail.com?subject=${encodeURIComponent(
+        subject.trim() || 'Software Engineering Inquiry'
+      )}&body=${encodeURIComponent(`From: ${name} (${email})\n\n${message}`)}`;
+      window.location.href = mailtoUrl;
+      setSent(true);
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
-    <section id="contact" className="section-pad relative">
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-0 h-72 w-[600px] -translate-x-1/2 rounded-full bg-brand-500/10 blur-[120px]" />
-      </div>
-      <div className="container-px">
-        <SectionHeading
-          eyebrow="Contact"
-          title="Let's build something together"
-          description="Have a role, a project, or an idea? Send a message and let's connect."
-        />
+    <section id="contact" className="sec-ivory">
+      <div className="in">
+        <div className="flex items-center gap-[14px]">
+          <span className="iv-label iv-signal">09</span>
+          <span className="h-px w-[44px] bg-vermilion" />
+          <span className="iv-label iv-muted">Final signal</span>
+          <span className="iv-label iv-muted ml-auto hidden sm:block">
+            <span>{istTime} IST</span>
+          </span>
+        </div>
 
-        <div className="mt-14 grid gap-8 lg:grid-cols-[1fr_1.2fr]">
-          {/* Info column */}
-          <div className="space-y-6">
-            <div className="card p-6 sm:p-8">
-              <h3 className="font-display text-lg font-semibold">Get in touch</h3>
-              <p className="mt-2 text-sm text-ink-500 dark:text-ink-400">
-                Based in {profile.location}. Open to full-time roles, contract work, and interesting collaborations.
-              </p>
-              <div className="mt-6 space-y-4">
-                <a
-                  href={`mailto:${profile.email}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${profile.email}`, '_blank');
-                  }}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group flex items-center gap-4"
-                >
-                  <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand-500/10 text-brand-600 transition-colors group-hover:bg-brand-500 group-hover:text-white dark:text-brand-300">
-                    <Mail size={18} />
-                  </span>
-                  <div>
-                    <p className="text-xs text-ink-400 dark:text-ink-500">Email</p>
-                    <p className="text-sm font-medium">{profile.email}</p>
-                  </div>
-                </a>
-                <a href={`tel:${profile.phone.replace(/\s+/g, '')}`} className="group flex items-center gap-4">
-                  <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand-500/10 text-brand-600 transition-colors group-hover:bg-brand-500 group-hover:text-white dark:text-brand-300">
-                    <Phone size={18} />
-                  </span>
-                  <div>
-                    <p className="text-xs text-ink-400 dark:text-ink-500">Phone</p>
-                    <p className="text-sm font-medium">{profile.phone}</p>
-                  </div>
-                </a>
-                <div className="flex items-center gap-4">
-                  <span className="grid h-11 w-11 place-items-center rounded-xl bg-accent-500/10 text-accent-600 dark:text-accent-300">
-                    <MapPin size={18} />
-                  </span>
-                  <div>
-                    <p className="text-xs text-ink-400 dark:text-ink-500">Location</p>
-                    <p className="text-sm font-medium">{profile.location}</p>
-                  </div>
-                </div>
+        <h2 className="mt-4 max-w-[760px] text-[2rem] font-normal leading-[1.1] tracking-[-0.02em] text-graphite sm:text-[2.875rem]">
+          Let&#x27;s build something together.
+        </h2>
+        <p className="mt-4 max-w-[600px] text-[18px] leading-[1.6] text-bodyink">
+          Have a role, a project, or an idea? Send a message and let&#x27;s connect. Based in
+          Bengaluru, India and open to full-time roles, contract work, and interesting
+          collaborations.
+        </p>
+
+        <div className="mt-10 grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-14">
+          {/* Left Column */}
+          <div className="flex flex-col gap-5">
+            <a
+              href="mailto:sumanthrk512@gmail.com"
+              rel="noreferrer"
+              className="lnk flex items-center gap-4 border-b border-ruleline pb-4"
+            >
+              <Mail className="h-[22px] w-[22px] shrink-0 text-vermilion" strokeWidth={1.5} />
+              <div className="min-w-0">
+                <span className="iv-label iv-muted block">Email</span>
+                <span className="mt-1 block truncate text-[17px] text-graphite">
+                  sumanthrk512@gmail.com
+                </span>
               </div>
-              <div className="mt-6 flex gap-3">
-                <a
-                  href={profile.githubUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="GitHub"
-                  className="grid h-10 w-10 place-items-center rounded-full border border-ink-200 text-ink-700 transition-colors hover:bg-white dark:border-white/10 dark:text-ink-200 dark:hover:bg-white/10"
-                >
-                  <Github size={17} />
-                </a>
-                <a
-                  href={profile.linkedinUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="LinkedIn"
-                  className="grid h-10 w-10 place-items-center rounded-full border border-ink-200 text-ink-700 transition-colors hover:bg-white dark:border-white/10 dark:text-ink-200 dark:hover:bg-white/10"
-                >
-                  <Linkedin size={17} />
-                </a>
+            </a>
+
+            <a
+              href="tel:+917975672123"
+              rel="noreferrer"
+              className="lnk flex items-center gap-4 border-b border-ruleline pb-4"
+            >
+              <Phone className="h-[22px] w-[22px] shrink-0 text-vermilion" strokeWidth={1.5} />
+              <div className="min-w-0">
+                <span className="iv-label iv-muted block">Phone</span>
+                <span className="mt-1 block truncate text-[17px] text-graphite">
+                  +91 7975672123
+                </span>
               </div>
+            </a>
+
+            <div className="flex items-center gap-4 border-b border-ruleline pb-4">
+              <MapPin className="h-[22px] w-[22px] shrink-0 text-vermilion" strokeWidth={1.5} />
+              <div className="min-w-0">
+                <span className="iv-label iv-muted block">Location</span>
+                <span className="mt-1 block truncate text-[17px] text-graphite">
+                  Bengaluru, India — 12.9716 N / 77.5946 E
+                </span>
+              </div>
+            </div>
+
+            <div className="flex gap-[26px] pt-1">
+              <a
+                href="https://github.com/sumanthrk00"
+                target="_blank"
+                rel="noreferrer"
+                className="iv-label lnk inline-flex items-center gap-2"
+              >
+                <Github className="h-4 w-4" />
+                GitHub
+              </a>
+              <a
+                href="http://linkedin.com/in/sumanth-r-k"
+                target="_blank"
+                rel="noreferrer"
+                className="iv-label lnk inline-flex items-center gap-2"
+              >
+                <Linkedin className="h-4 w-4" />
+                LinkedIn
+              </a>
             </div>
           </div>
 
-          {/* Form column */}
-          <div>
-            <form onSubmit={handleSubmit} className="card p-6 sm:p-8">
-              <div className="grid gap-5 sm:grid-cols-2">
-                <Field label="Name" htmlFor="name">
-                  <input
-                    id="name"
-                    type="text"
-                    required
-                    value={form.name}
-                    onChange={(e) => update('name', e.target.value)}
-                    placeholder="Jane Doe"
-                    className="input"
-                  />
-                </Field>
-                <Field label="Email" htmlFor="email">
-                  <input
-                    id="email"
-                    type="email"
-                    required
-                    value={form.email}
-                    onChange={(e) => update('email', e.target.value)}
-                    placeholder="jane@company.com"
-                    className="input"
-                  />
-                </Field>
-              </div>
-              <div className="mt-5">
-                <Field label="Subject" htmlFor="subject">
-                  <input
-                    id="subject"
-                    type="text"
-                    required
-                    value={form.subject}
-                    onChange={(e) => update('subject', e.target.value)}
-                    placeholder="Let's work together"
-                    className="input"
-                  />
-                </Field>
-              </div>
-              <div className="mt-5">
-                <Field label="Message" htmlFor="message">
-                  <textarea
-                    id="message"
-                    required
-                    rows={5}
-                    value={form.message}
-                    onChange={(e) => update('message', e.target.value)}
-                    placeholder="Tell me about your project or role…"
-                    className="input resize-none"
-                  />
-                </Field>
-              </div>
+          {/* Right Column: Form */}
+          <div className="border border-ruleline bg-parchment p-6 shadow-[0_10px_24px_rgba(22,19,15,0.12)] sm:p-8">
+            <form onSubmit={handleSubmit}>
+              <label className="mb-[18px] block">
+                <span className="iv-label iv-muted">Name</span>
+                <input
+                  id="name"
+                  required
+                  maxLength={120}
+                  className="field-ivory"
+                  placeholder="Your name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </label>
+
+              <label className="mb-[18px] block">
+                <span className="iv-label iv-muted">Email</span>
+                <input
+                  id="email"
+                  type="email"
+                  required
+                  maxLength={200}
+                  className="field-ivory"
+                  placeholder="you@company.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </label>
+
+              <label className="mb-[18px] block">
+                <span className="iv-label iv-muted">Subject</span>
+                <input
+                  id="subject"
+                  maxLength={200}
+                  className="field-ivory"
+                  placeholder="Role, project or collaboration"
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                />
+              </label>
+
+              <label className="mb-[18px] block">
+                <span className="iv-label iv-muted">Message</span>
+                <textarea
+                  id="message"
+                  required
+                  rows={4}
+                  maxLength={4000}
+                  className="field-ivory resize-none"
+                  placeholder="Tell me what you're building…"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                />
+              </label>
 
               <button
                 type="submit"
-                disabled={status === 'loading' || status === 'success'}
-                className="btn-primary mt-6 w-full"
+                disabled={loading}
+                className="btn-ivory btn-ivory-solid disabled:cursor-not-allowed disabled:opacity-70"
               >
-                {status === 'loading' ? (
-                  <>
-                    <Loader2 size={16} className="animate-spin" /> Sending…
-                  </>
-                ) : status === 'success' ? (
-                  <>
-                    <CheckCircle2 size={16} /> Message sent
-                  </>
-                ) : (
-                  <>
-                    <Send size={16} /> Send message
-                  </>
-                )}
+                <Send className="h-[13px] w-[13px]" />
+                {loading ? 'Sending…' : 'Send message'}
               </button>
 
-              {status === 'success' && (
-                <p className="mt-4 flex items-center gap-2 rounded-xl bg-accent-500/10 px-4 py-3 text-sm font-medium text-accent-700 dark:text-accent-300">
-                  <CheckCircle2 size={16} /> Thanks! Your message has been received — I'll be in touch shortly.
-                </p>
-              )}
-
-              {status === 'error' && (
-                <p className="mt-4 flex items-center gap-2 rounded-xl bg-red-500/10 px-4 py-3 text-sm font-medium text-red-700 dark:text-red-300">
-                  <AlertCircle size={16} /> {errorMsg}
+              {sent && (
+                <p className="mt-4 flex items-center gap-2 text-xs font-mono text-emerald-700">
+                  <CheckCircle2 size={14} /> Message sent / opened in email client.
                 </p>
               )}
             </form>
@@ -225,23 +227,3 @@ export function Contact() {
     </section>
   );
 }
-
-function Field({
-  label,
-  htmlFor,
-  children,
-}: {
-  label: string;
-  htmlFor: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div>
-      <label htmlFor={htmlFor} className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-ink-500 dark:text-ink-400">
-        {label}
-      </label>
-      {children}
-    </div>
-  );
-}
-

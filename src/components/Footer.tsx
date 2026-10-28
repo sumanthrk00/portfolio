@@ -1,83 +1,110 @@
+import { useState, useEffect } from 'react';
 import { Github, Linkedin, Mail, ArrowUp } from 'lucide-react';
-import { profile } from '@/data/portfolio';
 
 export function Footer() {
+  const [istTime, setIstTime] = useState<string>('--:--:--');
+
+  useEffect(() => {
+    function updateClock() {
+      try {
+        const timeStr = new Date().toLocaleTimeString('en-US', {
+          timeZone: 'Asia/Kolkata',
+          hour12: false,
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+        });
+        setIstTime(timeStr);
+      } catch {
+        setIstTime('15:30:00');
+      }
+    }
+    updateClock();
+    const timer = setInterval(updateClock, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
-    <footer className="relative border-t border-ink-200/70 bg-ink-50/50 dark:border-white/10 dark:bg-ink-950/50">
-      {/* Thank You Farewell Message */}
-      <div className="border-b border-ink-200/60 py-10 text-center dark:border-white/5 bg-gradient-to-b from-brand-500/[0.02] to-transparent">
-        <div className="container-px">
-          <h3 className="font-display text-xl sm:text-2xl font-bold text-ink-900 dark:text-white">
-            ✨ Thank you for visiting my portfolio.
-          </h3>
-          <p className="mt-2 text-sm sm:text-base font-medium text-brand-600 dark:text-brand-300">
-            Let's build something extraordinary together. 🚀
-          </p>
-        </div>
-      </div>
-
-      <div className="container-px py-12">
-        <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-          <div className="flex items-center gap-3">
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-600 font-display text-sm font-bold text-white">
-              SK
-            </span>
-            <div>
-              <p className="font-display text-sm font-semibold">{profile.name}</p>
-              <p className="text-xs text-ink-500 dark:text-ink-400">{profile.role}</p>
+    <footer className="mt-[84px] border-t border-graphite">
+      <div className="in">
+        <div className="grid gap-10 py-11 lg:grid-cols-[1.2fr_1.3fr_1fr]">
+          <div>
+            <div className="flex items-center gap-3">
+              <span className="iv-label grid h-[34px] w-[34px] place-items-center border border-graphite text-[10px] tracking-[0.18em]">
+                SRK
+              </span>
+              <span className="text-[16px] italic text-graphite">Sumanth R K</span>
             </div>
+            <p className="iv-label iv-muted mt-[18px]">Full Stack Software Engineer</p>
+            <p className="iv-label iv-muted mt-2">
+              Bengaluru, India · <span>{istTime} IST</span>
+            </p>
           </div>
 
-          <div className="flex items-center gap-3">
-            <a
-              href={profile.githubUrl}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="GitHub"
-              className="grid h-9 w-9 place-items-center rounded-full border border-ink-200 text-ink-700 transition-colors hover:bg-white dark:border-white/10 dark:text-ink-200 dark:hover:bg-white/10"
-            >
-              <Github size={17} />
+          <nav className="grid grid-cols-3 gap-x-7 gap-y-3 self-start">
+            <a href="#work" className="iv-label lnk">
+              Work
             </a>
-            <a
-              href={profile.linkedinUrl}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="LinkedIn"
-              className="grid h-9 w-9 place-items-center rounded-full border border-ink-200 text-ink-700 transition-colors hover:bg-white dark:border-white/10 dark:text-ink-200 dark:hover:bg-white/10"
-            >
-              <Linkedin size={17} />
+            <a href="#capabilities" className="iv-label lnk">
+              Capabilities
             </a>
-            <a
-              href={`mailto:${profile.email}`}
-              onClick={(e) => {
-                e.preventDefault();
-                window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${profile.email}`, '_blank');
-              }}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Email"
-              className="grid h-9 w-9 place-items-center rounded-full border border-ink-200 text-ink-700 transition-colors hover:bg-white dark:border-white/10 dark:text-ink-200 dark:hover:bg-white/10"
-            >
-              <Mail size={17} />
+            <a href="#journey" className="iv-label lnk">
+              Journey
+            </a>
+            <a href="#skills" className="iv-label lnk">
+              Matrix
+            </a>
+            <a href="#about" className="iv-label lnk">
+              About
+            </a>
+            <a href="#contact" className="iv-label lnk">
+              Contact
+            </a>
+            <a href="/Sumanth_RK_CV.pdf" download="Sumanth_RK_CV.pdf" className="iv-label lnk">
+              Résumé
+            </a>
+          </nav>
+
+          <div>
+            <div className="mb-3.5 flex gap-2.5">
+              <a
+                href="https://github.com/sumanthrk00"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="GitHub"
+                className="soc-link"
+              >
+                <Github className="h-[18px] w-[18px]" strokeWidth={1.5} />
+              </a>
+              <a
+                href="http://linkedin.com/in/sumanth-r-k"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn"
+                className="soc-link"
+              >
+                <Linkedin className="h-[18px] w-[18px]" strokeWidth={1.5} />
+              </a>
+              <a
+                href="mailto:sumanthrk512@gmail.com"
+                aria-label="Email"
+                className="soc-link"
+              >
+                <Mail className="h-[18px] w-[18px]" strokeWidth={1.5} />
+              </a>
+              <a href="#home" aria-label="Back to top" className="soc-link">
+                <ArrowUp className="h-[18px] w-[18px]" strokeWidth={1.5} />
+              </a>
+            </div>
+            <a href="mailto:sumanthrk512@gmail.com" className="iv-label iv-muted lnk">
+              sumanthrk512@gmail.com
             </a>
           </div>
-
-          <a
-            href="#home"
-            className="group inline-flex items-center gap-2 text-xs font-medium text-ink-500 transition-colors hover:text-brand-600 dark:text-ink-400 dark:hover:text-brand-300"
-          >
-            Back to top
-            <span className="grid h-8 w-8 place-items-center rounded-full border border-ink-200 transition-transform group-hover:-translate-y-0.5 dark:border-white/10">
-              <ArrowUp size={14} />
-            </span>
-          </a>
         </div>
 
-        <div className="mt-8 border-t border-ink-200/60 pt-6 text-center text-xs text-ink-400 dark:border-white/5 dark:text-ink-500">
-          <p>
-            © {new Date().getFullYear()} {profile.name}. Designed & built with React, TypeScript,
-            and Tailwind CSS.
-          </p>
+        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-ruleline py-5">
+          <p className="iv-label iv-muted">© 2026 Sumanth R K — 12.9716 N / 77.5946 E</p>
+          <p className="iv-label iv-muted">Built full stack · React · TypeScript · AWS</p>
         </div>
       </div>
     </footer>

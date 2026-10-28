@@ -1,178 +1,199 @@
-// This code was written for the GitHubSection component
 import { useEffect, useState } from 'react';
-import { GitFork, Github, Loader2, Star, AlertCircle, ExternalLink } from 'lucide-react';
-import { profile } from '@/data/portfolio';
+import { GitFork, Github, Loader2, Star, AlertCircle, ExternalLink, ArrowUpRight } from 'lucide-react';
+import { profile, fallbackRepos } from '@/data/portfolio';
+import { GitHubRepo } from '@/types/portfolio';
 import { SectionHeading } from '@/components/SectionHeading';
 
-type Repo = {
-  id: number;
-  name: string;
-  description: string;
-  html_url: string;
-  stargazers_count: number;
-  forks_count: number;
-  language: string;
-  updated_at: string;
-  topics?: string[];
-};
-
-function timeAgo(date: string): string {
-  const diff = Date.now() - new Date(date).getTime();
-  const days = Math.floor(diff / 86400000);
-  if (days < 30) return `${days}d ago`;
-  const months = Math.floor(days / 30);
-  if (months < 12) return `${months}mo ago`;
-  return `${Math.floor(months / 12)}y ago`;
+function formatTimeAgo(dateString: string): string {
+  try {
+    const diff = Date.now() - new Date(dateString).getTime();
+    const days = Math.floor(diff / 86400000);
+    if (days < 1) return 'today';
+    if (days < 30) return `${days}d ago`;
+    const months = Math.floor(days / 30);
+    if (months < 12) return `${months}mo ago`;
+    return `${Math.floor(months / 12)}y ago`;
+  } catch {
+    return 'recent';
+  }
 }
 
+const languageColors: Record<string, string> = {
+  Java: 'bg-amber-400',
+  Python: 'bg-blue-400',
+  TypeScript: 'bg-sky-400',
+  JavaScript: 'bg-yellow-400',
+  'HCL / Terraform': 'bg-purple-400',
+  HTML: 'bg-orange-500',
+  CSS: 'bg-blue-500',
+};
+
 export function GitHubSection() {
-  const [repos, setRepos] = useState<Repo[] | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [repos, setRepos] = useState<GitHubRepo[]>(fallbackRepos);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [isLive, setIsLive] = useState<boolean>(false);
 
   useEffect(() => {
     let cancelled = false;
-    async function load() {
+
+    async function fetchRepos() {
       try {
         const res = await fetch(
           `https://api.github.com/users/${profile.github}/repos?sort=updated&per_page=6&type=owner`,
+          {
+            headers: {
+              Accept: 'application/vnd.github.v3+json',
+            },
+          }
         );
-        if (!res.ok) throw new Error(`GitHub API responded ${res.status}`);
-        const data: Repo[] = await res.json();
-        const formatted = data.map((repo) => {
-          let cleanName = repo.name
-            .replace(/[-_]/g, ' ')
-            .replace(/\b(main\d*|master|v\d+)\b/gi, '')
-            .trim();
-          cleanName = cleanName ? cleanName.replace(/\b\w/g, (c) => c.toUpperCase()) : repo.name;
-          
-          const defaultDesc = repo.name.toLowerCase().includes('portfolio')
-            ? 'Full-stack responsive developer portfolio application built with React, TypeScript, and Tailwind CSS.'
-            : 'Open-source software project with clean architecture and modern developer tooling.';
-            
-          return {
-            ...repo,
-            name: cleanName,
-            description: repo.description || defaultDesc,
-          };
-        });
 
-        const sorted = [...formatted]
-          .sort((a, b) => b.stargazers_count - a.stargazers_count)
-          .slice(0, 6);
-        if (!cancelled) {
-          setRepos(sorted);
-          setError(null);
+        if (!res.ok) {
+          // Graceful fallback to verified repositories
+          if (!cancelled) {
+            setRepos(fallbackRepos);
+            setLoading(false);
+          }
+          return;
         }
-      } catch (e) {
-        if (!cancelled) setError(e instanceof Error ? e.message : 'Failed to load repositories');
+
+        const data: GitHubRepo[] = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          if (!cancelled) {
+            setRepos(data.slice(0, 6));
+            setIsLive(true);
+          }
+        } else {
+          if (!cancelled) setRepos(fallbackRepos);
+        }
+      } catch {
+        if (!cancelled) {
+          setRepos(fallbackRepos);
+        }
       } finally {
-        if (!cancelled) setLoading(false);
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
     }
-    load();
+
+    fetchRepos();
+
     return () => {
       cancelled = true;
     };
   }, []);
 
   return (
-    <section id="github" className="section-pad relative">
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute right-1/4 top-1/3 h-72 w-72 rounded-full bg-accent-500/10 blur-[120px]" />
+    <section id="github" className="section-pad relative border-t border-white/[0.06]">
+      {/* Background ambient lighting */}
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute right-1/3 top-1/2 h-80 w-80 -translate-y-1/2 rounded-full bg-cyan-500/[0.04] blur-[150px]" />
       </div>
+
       <div className="container-px">
+        {/* Section Heading */}
         <SectionHeading
-          eyebrow="GitHub"
-          title="Open source & side projects"
-          description="Live data from my GitHub profile — top repositories by stars."
+          number="07"
+          eyebrow="OPEN SOURCE"
+          title="Code, collaboration, and continuous learning."
+          description="Public repositories, open-source architectures, and developer experiments published on GitHub."
         />
 
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-          <a
-            href={profile.githubUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-ink-200 bg-white/60 px-4 py-2 text-sm font-medium text-ink-700 transition-colors hover:bg-white dark:border-white/10 dark:bg-white/5 dark:text-ink-200 dark:hover:bg-white/10"
-          >
-            <Github size={16} /> @{profile.github}
-            <ExternalLink size={13} className="text-ink-400" />
-          </a>
+        {/* Profile Link Header Bar */}
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-white/[0.08] bg-[#0c101a] p-4 sm:p-5">
+          <div className="flex items-center gap-3">
+            <span className="grid h-10 w-10 place-items-center rounded-lg border border-cyan-500/30 bg-cyan-500/10 text-cyan-400">
+              <Github size={20} />
+            </span>
+            <div>
+              <p className="font-display text-sm font-semibold text-white">
+                GitHub Profile
+              </p>
+              <p className="font-mono text-xs text-slate-400">
+                @{profile.github} • Verified Developer
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <span className="inline-flex items-center gap-1.5 font-mono text-[11px] text-slate-400">
+              <span className={`h-2 w-2 rounded-full ${isLive ? 'bg-emerald-400' : 'bg-cyan-400'}`} />
+              <span>{isLive ? 'Live API Feed' : 'Verified Repositories'}</span>
+            </span>
+
+            <a
+              href={profile.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-secondary !px-3.5 !py-1.5 !text-xs font-mono"
+            >
+              <span>Visit Profile</span>
+              <ArrowUpRight size={13} />
+            </a>
+          </div>
         </div>
 
-        <div className="mt-10">
-          {loading && (
-            <div className="flex items-center justify-center gap-3 py-16 text-ink-500 dark:text-ink-400">
-              <Loader2 className="animate-spin" size={20} />
-              <span className="text-sm">Loading repositories…</span>
-            </div>
-          )}
+        {/* Repository Grid */}
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {repos.map((repo) => (
+            <a
+              key={repo.id}
+              href={repo.html_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex flex-col justify-between rounded-xl border border-white/[0.08] bg-[#0c101a] p-5 sm:p-6 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/40 hover:bg-[#101524] hover:shadow-xl hover:shadow-cyan-500/5"
+            >
+              <div>
+                {/* Repo Top: Icon & Updated time */}
+                <div className="flex items-start justify-between">
+                  <span className="grid h-9 w-9 place-items-center rounded-lg border border-white/[0.08] bg-white/[0.03] text-slate-300 transition-colors group-hover:border-cyan-500/40 group-hover:text-cyan-400">
+                    <Github size={16} />
+                  </span>
+                  <span className="font-mono text-[11px] text-slate-500">
+                    {formatTimeAgo(repo.updated_at)}
+                  </span>
+                </div>
 
-          {error && !loading && (
-            <div className="mx-auto max-w-md rounded-2xl border border-amber-300/40 bg-amber-50 p-6 text-center dark:border-amber-500/20 dark:bg-amber-500/10">
-              <AlertCircle className="mx-auto text-amber-600 dark:text-amber-400" size={24} />
-              <p className="mt-3 text-sm text-amber-700 dark:text-amber-300">
-                Could not load live GitHub data right now. The GitHub API rate limit may have been reached.
-              </p>
-              <a
-                href={profile.githubUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="btn-ghost mt-4 !py-2 !text-xs"
-              >
-                <Github size={14} /> Visit GitHub profile
-              </a>
-            </div>
-          )}
+                <h3 className="mt-4 font-mono text-base font-bold text-white group-hover:text-cyan-300 transition-colors flex items-center gap-1.5">
+                  <span className="line-clamp-1">{repo.name}</span>
+                  <ArrowUpRight size={14} className="shrink-0 text-slate-500 group-hover:text-cyan-400 transition-colors" />
+                </h3>
 
-          {repos && !loading && !error && (
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {repos.map((repo) => (
-                <a
-                  key={repo.id}
-                  href={repo.html_url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="card group flex flex-col p-5 transition-all duration-300 hover:-translate-y-1"
-                >
-                  <div className="flex items-start justify-between">
-                    <span className="grid h-10 w-10 place-items-center rounded-xl bg-ink-100 text-ink-700 transition-colors group-hover:bg-brand-500/10 group-hover:text-brand-600 dark:bg-white/5 dark:text-ink-200 dark:group-hover:bg-brand-500/15 dark:group-hover:text-brand-300">
-                      <Github size={18} />
-                    </span>
-                    <span className="font-mono text-xs text-ink-400 dark:text-ink-500">
-                      {timeAgo(repo.updated_at)}
-                    </span>
-                  </div>
-                  <h3 className="mt-4 font-display text-base font-semibold link-underline">
-                    {repo.name}
-                  </h3>
-                  <p className="mt-1.5 line-clamp-2 text-sm text-ink-500 dark:text-ink-400">
-                    {repo.description || 'No description provided.'}
-                  </p>
-                  <div className="mt-auto flex items-center justify-between pt-4">
-                    <div className="flex items-center gap-3 text-xs text-ink-500 dark:text-ink-400">
-                      {repo.language && (
-                        <span className="flex items-center gap-1.5">
-                          <span className="h-2.5 w-2.5 rounded-full bg-brand-500" />
-                          {repo.language}
-                        </span>
-                      )}
-                      <span className="flex items-center gap-1">
-                        <Star size={13} /> {repo.stargazers_count}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <GitFork size={13} /> {repo.forks_count}
-                      </span>
-                    </div>
-                    <ExternalLink size={14} className="text-ink-400 transition-colors group-hover:text-brand-500" />
-                  </div>
-                </a>
-              ))}
-            </div>
-          )}
+                <p className="mt-2 text-xs leading-relaxed text-slate-400 line-clamp-3">
+                  {repo.description || 'Open-source software project with clean architecture and modern developer tooling.'}
+                </p>
+              </div>
+
+              {/* Repo Footer: Language & Statistics */}
+              <div className="mt-5 pt-4 border-t border-white/[0.06] flex items-center justify-between text-xs font-mono text-slate-400">
+                {repo.language ? (
+                  <span className="flex items-center gap-1.5">
+                    <span
+                      className={`h-2 w-2 rounded-full ${
+                        languageColors[repo.language] || 'bg-cyan-400'
+                      }`}
+                    />
+                    <span className="text-slate-300">{repo.language}</span>
+                  </span>
+                ) : (
+                  <span className="text-slate-500">Code</span>
+                )}
+
+                <div className="flex items-center gap-3">
+                  <span className="flex items-center gap-1 hover:text-white transition-colors">
+                    <Star size={13} className="text-slate-400" />
+                    <span>{repo.stargazers_count}</span>
+                  </span>
+                  <span className="flex items-center gap-1 hover:text-white transition-colors">
+                    <GitFork size={13} className="text-slate-400" />
+                    <span>{repo.forks_count}</span>
+                  </span>
+                </div>
+              </div>
+            </a>
+          ))}
         </div>
       </div>
     </section>
   );
 }
-
