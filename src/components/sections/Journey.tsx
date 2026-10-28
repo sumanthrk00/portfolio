@@ -72,7 +72,7 @@ export function Journey() {
           {journey.map((item) => (
             <div
               key={item.num}
-              className="wash-row grid gap-x-5 gap-y-2 border-b border-ruleline py-6 lg:grid-cols-[130px_70px_1fr_1.3fr] lg:items-baseline"
+              className="wash-row grid gap-x-5 gap-y-2 border-b border-ruleline py-5 sm:grid-cols-[50px_90px_1fr] lg:grid-cols-[60px_90px_1.1fr_1.3fr] lg:items-baseline"
             >
               <span className="iv-label iv-muted">{item.num}</span>
               <span className="tag-ivory justify-self-start">{item.tag}</span>

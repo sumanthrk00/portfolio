@@ -55,11 +55,38 @@
   max-width: 1166px;
   margin-inline: auto;
   padding-inline: 1.25rem;
+  box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+  .in {
+    padding-inline: 2rem;
+  }
 }
 
 @media (min-width: 768px) {
   .in {
+    padding-inline: 2.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .in {
     padding-inline: 3.5rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .in {
+    max-width: 1240px;
+    padding-inline: 3.5rem;
+  }
+}
+
+@media (min-width: 1680px) {
+  .in {
+    max-width: 1300px;
+    padding-inline: 4rem;
   }
 }
 

@@ -21,45 +21,45 @@ const skillsTicker = [
 export function Hero() {
   return (
     <>
-      <section id="home" className="relative">
+      <section id="home" className="relative pt-2 lg:pt-4">
         <div className="in">
-          <div className="relative lg:min-h-[640px]">
-            {/* Massive Heading */}
+          <div className="relative min-h-[580px] sm:min-h-[620px] lg:min-h-[640px]">
+            {/* Monumental Heading */}
             <h1
-              className="anim-up relative z-[2] pt-7 font-normal uppercase leading-none tracking-[-0.04em] text-graphite"
-              style={{ fontSize: 'clamp(3.2rem, 13vw, 158px)', animationDelay: '0.2s' }}
+              className="anim-up relative z-[2] pt-4 sm:pt-6 font-normal uppercase leading-[0.94] tracking-[-0.04em] text-graphite lg:pt-8"
+              style={{ fontSize: 'clamp(3rem, 10.5vw, 150px)', animationDelay: '0.2s' }}
             >
               Sumanth<i className="block font-normal italic text-vermilion">R K</i>
             </h1>
 
             {/* Hero Portrait Plate */}
-            <div className="relative z-[1] mt-10 w-full max-w-[430px] overflow-hidden shadow-[-10px_14px_30px_rgba(22,19,15,0.19)] lg:absolute lg:right-[-56px] lg:top-0 lg:mt-0 lg:h-[640px] lg:w-[430px] lg:max-w-none">
-              <span className="inline-block relative portrait-par h-full w-full object-cover">
+            <div className="relative z-[1] mt-8 w-full max-w-[400px] overflow-hidden bg-[#16130f] shadow-[-10px_14px_30px_rgba(22,19,15,0.19)] lg:absolute lg:right-0 xl:right-[-20px] 2xl:right-[-36px] lg:top-0 lg:mt-0 lg:h-[620px] xl:h-[640px] lg:w-[380px] xl:w-[430px] lg:max-w-none">
+              <span className="portrait-par relative block h-[106%] w-full overflow-hidden">
                 <img
                   src="/hero-portrait.jpg"
                   alt="Sumanth R K"
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-cover scale-[1.04]"
                 />
               </span>
             </div>
 
             {/* Intro & CTAs */}
             <div
-              className="anim-up relative z-[2] mt-10 max-w-[600px] lg:mt-[92px]"
-              style={{ animationDelay: '0.5s' }}
+              className="anim-up relative z-[2] mt-8 max-w-[580px] lg:mt-[68px] xl:mt-[84px]"
+              style={{ animationDelay: '0.45s' }}
             >
-              <div className="mb-5 inline-flex items-center gap-[9px]">
-                <span className="h-[7px] w-[7px] rounded-full bg-vermilion" />
+              <div className="mb-4 inline-flex items-center gap-[9px]">
+                <span className="h-[7px] w-[7px] rounded-full bg-vermilion animate-pulse" />
                 <span className="iv-label">Available for new opportunities</span>
               </div>
 
-              <div className="mb-[18px] flex flex-wrap gap-x-[18px] gap-y-2">
+              <div className="mb-4 flex flex-wrap gap-x-[18px] gap-y-2">
                 <span className="iv-label iv-signal">Full Stack Software Engineer</span>
                 <span className="iv-label iv-muted">Bengaluru, India</span>
-                <span className="iv-label iv-muted">12.9716 N / 77.5946 E</span>
+                <span className="iv-label iv-muted">12.9716° N / 77.5946° E</span>
               </div>
 
-              <p className="max-w-[520px] text-[19px] leading-[1.55] text-bodyink">
+              <p className="max-w-[520px] text-[17.5px] leading-[1.6] text-bodyink lg:text-[19px]">
                 I am a Full Stack Software Engineer who enjoys building secure, scalable, and
                 high-performance software. My work spans modern frontend development, backend
                 engineering, cloud infrastructure, and DevOps automation.
@@ -98,12 +98,12 @@ export function Hero() {
 
             {/* Bottom Chips */}
             <div
-              className="anim-up relative z-[2] mt-10 flex flex-wrap gap-2 lg:absolute lg:bottom-1.5 lg:left-0 lg:mt-0 lg:w-[700px]"
-              style={{ animationDelay: '0.8s' }}
+              className="anim-up relative z-[2] mt-8 flex flex-wrap items-center gap-2 lg:absolute lg:bottom-1.5 lg:left-0 lg:mt-0 lg:w-[720px] xl:w-[760px]"
+              style={{ animationDelay: '0.7s' }}
             >
               {['React', 'AWS', 'MySQL', 'React Native', 'Java', 'Python', 'TypeScript', 'Docker'].map(
                 (skill) => (
-                  <span key={skill} className="chip-ivory">
+                  <span key={skill} className="chip-ivory whitespace-nowrap">
                     {skill}
                   </span>
                 )
@@ -114,7 +114,7 @@ export function Hero() {
       </section>
 
       {/* Skills Ticker Track */}
-      <div className="in">
+      <div className="in w-full">
         <div className="mt-[34px] overflow-hidden whitespace-nowrap border-b border-t border-graphite py-[13px]">
           <div className="ticker-track">
             {[...skillsTicker, ...skillsTicker].map((skill, index) => (

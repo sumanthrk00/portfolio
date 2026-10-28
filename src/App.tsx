@@ -13,7 +13,7 @@ import { Footer } from '@/components/Footer';
 
 export function App() {
   return (
-    <div className="paper-page relative min-h-screen overflow-hidden">
+    <div className="paper-page relative min-h-screen overflow-x-hidden">
       {/* Background paper grain effect */}
       <div className="grain" aria-hidden="true" />
 
