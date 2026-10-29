@@ -72,21 +72,35 @@
 
 @media (min-width: 1024px) {
   .in {
-    padding-inline: 3.5rem;
+    padding-inline: 2.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .in {
+    max-width: 1220px;
+    padding-inline: 3rem;
   }
 }
 
 @media (min-width: 1440px) {
   .in {
-    max-width: 1240px;
+    max-width: 1340px;
     padding-inline: 3.5rem;
   }
 }
 
 @media (min-width: 1680px) {
   .in {
-    max-width: 1300px;
+    max-width: 1480px;
     padding-inline: 4rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  .in {
+    max-width: 1560px;
+    padding-inline: 4.5rem;
   }
 }
 
